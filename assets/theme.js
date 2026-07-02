@@ -323,12 +323,12 @@ const CartDrawer = (function () {
    SEARCH OVERLAY
 ══════════════════════════════════════════════════════════════════════════════ */
 (function initSearch() {
-  const overlay  = $('.search-overlay');
+  const overlay = $('.search-overlay');
+  if (!overlay) return;
   const input    = $('[data-search-input]', overlay);
   const results  = $('[data-search-results]', overlay);
   const openBtns = $$('[data-search-open]');
   const closeBtn = $('[data-search-close]', overlay);
-  if (!overlay) return;
 
   function openSearch() {
     overlay.classList.add('is-open');
@@ -422,24 +422,15 @@ const CartDrawer = (function () {
     });
   }
 
-  /* Accordion — ingredients, how to use, etc. */
-  $$('[data-accordion-toggle]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const panel = btn.nextElementSibling;
-      const isOpen = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', String(!isOpen));
-      if (panel) panel.hidden = isOpen;
-    });
-  });
 })();
 
 /* ═══════════════════════════════════════════════════════════════════════════
    ORDER TRACKER
 ══════════════════════════════════════════════════════════════════════════════ */
 (function initOrderTracker() {
-  const form  = $('[data-tracker-form]');
-  const input = $('[data-tracker-input]', form);
+  const form = $('[data-tracker-form]');
   if (!form) return;
+  const input = $('[data-tracker-input]', form);
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();

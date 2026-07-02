@@ -45,6 +45,17 @@
     },
     "bestsellers": {
       "type": "featured-collection",
+      "blocks": {
+        "pill-1": { "type": "category_pill", "settings": { "label": "Spiritual & Pooja", "collection": "top-sellers-spiritual-pooja" } },
+        "pill-2": { "type": "category_pill", "settings": { "label": "Fashion & Grooming", "collection": "top-sellers-fashion-grooming" } },
+        "pill-3": { "type": "category_pill", "settings": { "label": "Ayurveda & Herbal", "collection": "top-sellers-ayurveda-herbal" } },
+        "pill-4": { "type": "category_pill", "settings": { "label": "Food & Organic", "collection": "top-sellers-food-organic" } },
+        "pill-5": { "type": "category_pill", "settings": { "label": "Jewellery & Fashion", "collection": "top-sellers-jewellery-fashion" } },
+        "pill-6": { "type": "category_pill", "settings": { "label": "Kids & Baby", "collection": "top-sellers-kids-baby" } },
+        "pill-7": { "type": "category_pill", "settings": { "label": "Home & Living", "collection": "top-sellers-home-living" } },
+        "pill-8": { "type": "category_pill", "settings": { "label": "Bags & Pouches", "collection": "top-sellers-bags-pouches" } }
+      },
+      "block_order": ["pill-1", "pill-2", "pill-3", "pill-4", "pill-5", "pill-6", "pill-7", "pill-8"],
       "settings": {
         "eyebrow": "MOST LOVED",
         "heading": "Bestsellers",

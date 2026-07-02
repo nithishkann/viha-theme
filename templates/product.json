@@ -5,12 +5,13 @@
       "settings": {}
     },
     "related-products": {
-      "type": "featured-collection",
+      "type": "related-products",
       "settings": {
         "eyebrow": "You May Also Like",
         "heading": "Related Products",
         "products_to_show": 4,
-        "show_view_all": false
+        "show_view_more": true,
+        "view_more_label": "View More Related Products"
       }
     }
   },

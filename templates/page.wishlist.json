@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "main": {
+      "type": "wishlist-page",
+      "settings": {
+        "eyebrow": "Your Collection",
+        "heading": "Saved Items",
+        "empty_heading": "No saved items yet",
+        "empty_text": "Tap the heart icon on any product to save it here for later.",
+        "empty_button_label": "Explore Sacred Catalog",
+        "empty_button_url": "/collections/all"
+      }
+    }
+  },
+  "order": ["main"]
+}

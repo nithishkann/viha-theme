@@ -1,0 +1,25 @@
+{
+  "sections": {
+    "main": {
+      "type": "track-order-page",
+      "blocks": {
+        "step-1": { "type": "status_step", "settings": { "title": "Order Placed", "description": "Your order has been confirmed and payment verified." } },
+        "step-2": { "type": "status_step", "settings": { "title": "Packed", "description": "Your sacred items are carefully wrapped and packed for safe transit." } },
+        "step-3": { "type": "status_step", "settings": { "title": "Shipped", "description": "Handed over to our logistics partner. Tracking number assigned." } },
+        "step-4": { "type": "status_step", "settings": { "title": "Out for Delivery", "description": "Your parcel is with the delivery agent and arriving today." } },
+        "step-5": { "type": "status_step", "settings": { "title": "Delivered", "description": "Your sacred items have arrived. May they bring peace and positivity." } }
+      },
+      "block_order": ["step-1", "step-2", "step-3", "step-4", "step-5"],
+      "settings": {
+        "eyebrow": "Order Status",
+        "heading": "Track Your Spiritual Journey",
+        "subtext": "Enter your Viha order ID and the email address used at checkout to get real-time updates on your sacred items.",
+        "form_heading": "Enter Order Details",
+        "help_heading": "Can't find your order?",
+        "help_text": "Your order confirmation email contains your Order ID. If you still can't find it,",
+        "legend_heading": "Order Status Guide"
+      }
+    }
+  },
+  "order": ["main"]
+}

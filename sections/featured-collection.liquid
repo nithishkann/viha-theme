@@ -1,6 +1,8 @@
 {%- assign feat_collection = collections[section.settings.collection] -%}
+{%- assign has_tabs = false -%}
+{%- if section.blocks.size > 0 -%}{%- assign has_tabs = true -%}{%- endif -%}
 
-<section class="section section--paper">
+<section class="section section--paper" data-tab-section="{{ section.id }}">
   <div class="container">
     <div style="text-align:center;margin-bottom:2.5rem;">
       <span class="section__eyebrow">{{ section.settings.eyebrow | default: 'Our Bestsellers' }}</span>
@@ -13,39 +15,157 @@
       {% if section.settings.subtext != blank %}
         <p style="max-width:42rem;margin:1rem auto 0;font-size:14px;color:rgba(45,45,45,0.7);line-height:1.75;">{{ section.settings.subtext }}</p>
       {% endif %}
+
+      {%- if has_tabs -%}
+        <div class="pill-row" role="tablist" aria-label="{{ section.settings.heading | default: 'Categories' }}">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'category_pill' -%}
+              {%- assign pill_col = collections[block.settings.collection] -%}
+              {%- assign panel_id = 'tab-panel-' | append: section.id | append: '-' | append: forloop.index -%}
+              <a href="/collections/{{ block.settings.collection }}"
+                class="pill-btn{% if forloop.first %} is-active{% endif %}"
+                data-tab-pill
+                data-tab-target="{{ panel_id }}"
+                role="tab"
+                aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                {{ block.shopify_attributes }}>
+                {{ block.settings.label | default: pill_col.title }}
+              </a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
     </div>
 
-    {%- if feat_collection != blank and feat_collection.products.size > 0 -%}
-      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;" class="lg-grid-4">
-        {%- for product in feat_collection.products limit: section.settings.products_to_show -%}
-          {% render 'product-card', product: product, lazy: true %}
-        {%- endfor -%}
-      </div>
+    {%- if has_tabs -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'category_pill' -%}
+          {%- assign tab_col = collections[block.settings.collection] -%}
+          {%- assign panel_id = 'tab-panel-' | append: section.id | append: '-' | append: forloop.index -%}
+          <div class="tab-panel" id="{{ panel_id }}" {% unless forloop.first %}hidden{% endunless %}>
+            {%- if tab_col != blank and tab_col.products.size > 0 -%}
+              <div class="collection-scroll">
+                {%- for product in tab_col.products limit: section.settings.products_to_show -%}
+                  {% render 'product-card', product: product, lazy: true %}
+                {%- endfor -%}
+              </div>
+              {% if section.settings.show_view_all %}
+                <div style="text-align:center;margin-top:2rem;">
+                  <a href="{{ tab_col.url }}" class="btn btn--ghost" style="margin:0 auto;">
+                    View All {{ tab_col.title | remove: 'Top Sellers: ' }}
+                    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                    </svg>
+                  </a>
+                </div>
+              {% endif %}
+            {%- else -%}
+              <p style="text-align:center;color:rgba(45,45,45,0.5);padding:3rem 0;">No products found in this collection.</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
     {%- else -%}
-      <p style="text-align:center;color:rgba(45,45,45,0.5);padding:3rem 0;">No products found in this collection.</p>
+      {%- if feat_collection != blank and feat_collection.products.size > 0 -%}
+        <div class="collection-grid-4up">
+          {%- for product in feat_collection.products limit: section.settings.products_to_show -%}
+            {% render 'product-card', product: product, lazy: true %}
+          {%- endfor -%}
+        </div>
+        {% if section.settings.show_view_all %}
+          <div style="text-align:center;margin-top:2rem;">
+            <a href="{{ feat_collection.url }}" class="btn btn--ghost" style="margin:0 auto;">
+              View All {{ feat_collection.title | remove: 'Top Sellers: ' }}
+              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+              </svg>
+            </a>
+          </div>
+        {% endif %}
+      {%- else -%}
+        <p style="text-align:center;color:rgba(45,45,45,0.5);padding:3rem 0;">No products found in this collection.</p>
+      {%- endif -%}
     {%- endif -%}
-
-    {% if section.settings.show_view_all and feat_collection != blank %}
-      <div style="text-align:center;margin-top:2rem;">
-        <a href="{{ feat_collection.url }}" class="btn btn--ghost" style="margin:0 auto;">
-          View All {{ feat_collection.title }}
-          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
-          </svg>
-        </a>
-      </div>
-    {% endif %}
   </div>
 </section>
 
 <style>
-  @media (min-width: 1024px) {
-    .lg-grid-4 { grid-template-columns: repeat(4, 1fr) !important; }
+  .collection-scroll {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 4px;
   }
-  @media (min-width: 768px) and (max-width: 1023px) {
-    .lg-grid-4 { grid-template-columns: repeat(3, 1fr) !important; }
+  .collection-scroll::-webkit-scrollbar { display: none; }
+  .collection-scroll .product-card {
+    flex: 0 0 auto;
+    width: 65vw;
+    max-width: 240px;
+    scroll-snap-align: start;
   }
+  @media (min-width: 640px) { .collection-scroll .product-card { width: 220px; } }
+
+  .pill-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 1.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 2px 2px 6px;
+  }
+  .pill-row::-webkit-scrollbar { display: none; }
+  .pill-btn {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 16px;
+    border-radius: 100px;
+    border: 1px solid var(--color-cream-dark);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    color: rgba(45,45,45,0.65);
+    background: var(--color-paper);
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+  .pill-btn:hover { border-color: var(--color-maroon); }
+  .pill-btn.is-active { background: var(--color-maroon); color: #fff; border-color: var(--color-maroon); }
+
+  .tab-panel[hidden] { display: none; }
 </style>
+
+{%- if has_tabs -%}
+<script>
+(function() {
+  var root = document.querySelector('[data-tab-section="{{ section.id }}"]');
+  if (!root) return;
+  var pills = root.querySelectorAll('[data-tab-pill]');
+  pills.forEach(function(pill) {
+    pill.addEventListener('click', function(e) {
+      e.preventDefault();
+      var targetId = pill.getAttribute('data-tab-target');
+      pills.forEach(function(p) {
+        var active = p === pill;
+        p.classList.toggle('is-active', active);
+        p.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+      root.querySelectorAll('.tab-panel').forEach(function(panel) {
+        panel.hidden = panel.id !== targetId;
+      });
+      pill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    });
+  });
+})();
+</script>
+{%- endif -%}
 
 {% schema %}
 {
@@ -54,9 +174,19 @@
     { "type": "text",       "id": "eyebrow",          "label": "Eyebrow",           "default": "Our Bestsellers" },
     { "type": "text",       "id": "heading",          "label": "Heading",           "default": "Most-Loved Products" },
     { "type": "textarea",   "id": "subtext",          "label": "Subtext" },
-    { "type": "collection", "id": "collection",       "label": "Collection" },
+    { "type": "collection", "id": "collection",       "label": "Collection", "info": "Used only if no category buttons (blocks) are added below" },
     { "type": "range",      "id": "products_to_show", "label": "Products to show",  "min": 4, "max": 12, "step": 4, "default": 8 },
     { "type": "checkbox",   "id": "show_view_all",    "label": "Show 'View All' button", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "category_pill",
+      "name": "Category button",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Button label (defaults to the collection's title)" },
+        { "type": "collection", "id": "collection", "label": "Products shown when this button is selected" }
+      ]
+    }
   ],
   "presets": [
     { "name": "Featured Collection", "category": "Collection" }

@@ -1,0 +1,23 @@
+{%- comment -%} Our Story page hero {%- endcomment -%}
+<section style="background:var(--color-maroon);padding:5rem 1.5rem 4rem;text-align:center;">
+  <p style="font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:1rem;">{{ section.settings.eyebrow | default: 'Our Heritage Story' }}</p>
+  <h1 style="font-family:var(--font-heading);font-size:clamp(2.25rem,6vw,3.5rem);font-weight:900;color:#fff;line-height:1.1;max-width:700px;margin:0 auto 1.25rem;">
+    {{ section.settings.heading | default: 'Preserving Tradition, Promoting Wellness.' }}
+  </h1>
+  <p style="font-size:14px;color:rgba(255,255,255,0.7);max-width:540px;margin:0 auto;line-height:1.8;">
+    {{ section.settings.subtext | default: 'Rooted in five thousand years of Indian tradition. Every product we offer is personally selected to bring authentic, time-honoured essentials into your home.' }}
+  </p>
+</section>
+<div style="height:4px;background:linear-gradient(90deg,transparent,var(--color-gold),transparent);"></div>
+
+{% schema %}
+{
+  "name": "Story Hero",
+  "settings": [
+    { "type": "text",     "id": "eyebrow", "label": "Eyebrow text", "default": "Our Heritage Story" },
+    { "type": "text",     "id": "heading", "label": "Heading",      "default": "Preserving Tradition, Promoting Wellness." },
+    { "type": "textarea", "id": "subtext", "label": "Subtext" }
+  ],
+  "presets": [{ "name": "Story Hero" }]
+}
+{% endschema %}

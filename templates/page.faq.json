@@ -1,0 +1,25 @@
+{
+  "sections": {
+    "main": {
+      "type": "faq-page",
+      "blocks": {
+        "q1": { "type": "faq_item", "settings": { "group": "Orders & Shipping", "question": "How long does shipping take?", "answer": "We ship across India within 5–7 business days and internationally within 10–15 business days, depending on destination customs processing." } },
+        "q2": { "type": "faq_item", "settings": { "group": "Orders & Shipping", "question": "Do you ship internationally?", "answer": "Yes — we currently ship to 6 countries including the US, UK, Canada, Australia, Singapore, and the UAE. Shipping is free on orders over ₹999 (or the equivalent in your local currency)." } },
+        "q3": { "type": "faq_item", "settings": { "group": "Orders & Shipping", "question": "How can I track my order?", "answer": "Once your order ships, you'll receive a tracking link by email. You can also check status anytime on our Track Order page using your order ID." } },
+        "q4": { "type": "faq_item", "settings": { "group": "Returns & Refunds", "question": "What is your return policy?", "answer": "We accept returns within 7 days of delivery for unused, unopened items in original packaging. See our full Returns & Refunds policy for details." } },
+        "q5": { "type": "faq_item", "settings": { "group": "Returns & Refunds", "question": "How do I request a refund?", "answer": "Contact us with your order number and reason for return. Once we receive and inspect the item, refunds are processed within 5–7 business days to your original payment method." } },
+        "q6": { "type": "faq_item", "settings": { "group": "Returns & Refunds", "question": "Are sacred/pooja items returnable?", "answer": "For hygiene and ritual-use reasons, opened consumables, idols that have been consecrated, and personal-use Ayurvedic items are not eligible for return unless defective." } },
+        "q7": { "type": "faq_item", "settings": { "group": "Products & Authenticity", "question": "Are your products genuinely handcrafted?", "answer": "Yes. Every item is sourced directly from verified traditional artisans across Tamil Nadu and India, personally vetted by our founder Mrs Anitha Kuppusamy." } },
+        "q8": { "type": "faq_item", "settings": { "group": "Products & Authenticity", "question": "Are your Ayurvedic products certified?", "answer": "Our Ayurvedic and herbal products use pure, traditionally-sourced ingredients. Certification details are listed on individual product pages where applicable." } },
+        "q9": { "type": "faq_item", "settings": { "group": "Products & Authenticity", "question": "Can I get help choosing the right product?", "answer": "Absolutely — reach out via WhatsApp or our Contact page and our team will help you choose based on your ritual, gifting, or wellness needs." } }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9"],
+      "settings": {
+        "eyebrow": "Need Help?",
+        "heading": "Frequently Asked Questions",
+        "subtext": "Answers to common questions about orders, shipping, returns, and our products. Can't find what you're looking for?"
+      }
+    }
+  },
+  "order": ["main"]
+}

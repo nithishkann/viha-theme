@@ -1,0 +1,62 @@
+{
+  "sections": {
+    "hero": {
+      "type": "story-hero",
+      "settings": {
+        "eyebrow": "Our Heritage Story",
+        "heading": "Preserving Tradition, Promoting Wellness.",
+        "subtext": "Rooted in five thousand years of Indian tradition. Every product we offer is personally selected to bring authentic, time-honoured essentials into your home."
+      }
+    },
+    "founder": {
+      "type": "story-founder",
+      "settings": {
+        "founder_name": "Mrs. Anitha Kuppusamy",
+        "founder_title": "Founder · Viha Heritage Store",
+        "eyebrow": "The Founder",
+        "heading": "A Devotion Turned into a Mission",
+        "body": "<p>Viha Heritage Store was born from a deep reverence for Indian spiritual traditions and holistic wellness. Mrs Anitha Kuppusamy grew up immersed in the rituals, fragrances, and sacred craftsmanship of Tamil Nadu — and she recognised that these treasures deserved to reach devotees worldwide.</p><p>Every product we offer — from sacred brass idols to handcrafted Ayurvedic soaps — is personally selected and curated to bring authentic, time-honoured essentials into your home. We source directly from master craftsmen and traditional healers who have practised their trade for generations.</p><p>Rooted in Tamil Nadu's rich cultural heritage, Viha is more than a store. It is a living bridge between the wisdom of our ancestors and the needs of contemporary devotees worldwide.</p>",
+        "quote": "Authenticity is not a feature. It is the foundation.",
+        "quote_attribution": "Anitha Kuppusamy"
+      }
+    },
+    "values": {
+      "type": "story-values",
+      "blocks": {
+        "val-1": { "type": "value", "settings": { "icon": "check", "title": "Authentic Sourcing", "description": "Direct from master craftsmen and traditional healers across India — never mass-produced, never compromised." } },
+        "val-2": { "type": "value", "settings": { "icon": "sparkle", "title": "Sacred Craftsmanship", "description": "Every item is hand-selected for energy, intention, and quality by Mrs Anitha Kuppusamy personally." } },
+        "val-3": { "type": "value", "settings": { "icon": "sun", "title": "Heritage Preservation", "description": "We document and preserve endangered craft traditions by ensuring artisans receive fair trade prices." } },
+        "val-4": { "type": "value", "settings": { "icon": "heart", "title": "Holistic Wellness", "description": "Rooted in Ayurveda and Siddha medicine — products that nourish body, mind, and spirit together." } }
+      },
+      "block_order": ["val-1", "val-2", "val-3", "val-4"],
+      "settings": {
+        "eyebrow": "What We Stand For",
+        "heading": "Our Core Values"
+      }
+    },
+    "timeline": {
+      "type": "story-timeline",
+      "blocks": {
+        "ms-1": { "type": "milestone", "settings": { "year": "2010", "description": "Founded in Chennai, Tamil Nadu — Mrs. Anitha Kuppusamy begins curating sacred essentials from traditional artisans." } },
+        "ms-2": { "type": "milestone", "settings": { "year": "2015", "description": "Expanded to international shipping — serving the Indian diaspora across USA, UK, Canada and UAE." } },
+        "ms-3": { "type": "milestone", "settings": { "year": "2020", "description": "Crossed 50,000+ happy customers — trust built through authentic products and devotion to quality." } },
+        "ms-4": { "type": "milestone", "settings": { "year": "2023", "description": "Ships to 6 countries — delivering sacred traditions to devotees worldwide, every single day." } }
+      },
+      "block_order": ["ms-1", "ms-2", "ms-3", "ms-4"],
+      "settings": {
+        "eyebrow": "Our Journey",
+        "heading": "Milestones of Devotion"
+      }
+    },
+    "cta": {
+      "type": "story-cta",
+      "settings": {
+        "heading": "Begin Your Sacred Journey",
+        "subtext": "Explore our carefully curated collection of authentic spiritual essentials, Ayurvedic wellness products and handcrafted jewellery.",
+        "button_label": "Shop All Essentials",
+        "button_url": "/collections/all"
+      }
+    }
+  },
+  "order": ["hero", "founder", "values", "timeline", "cta"]
+}

@@ -1,0 +1,24 @@
+{
+  "sections": {
+    "main": {
+      "type": "contact-page",
+      "blocks": {
+        "item-1": { "type": "contact_item", "settings": { "icon": "email", "label": "Email", "value": "info@viha.online" } },
+        "item-2": { "type": "contact_item", "settings": { "icon": "whatsapp", "label": "WhatsApp", "value": "+91 98765 43210" } },
+        "item-3": { "type": "contact_item", "settings": { "icon": "clock", "label": "Hours", "value": "Mon – Sat: 10:00 AM – 6:00 PM IST" } }
+      },
+      "block_order": ["item-1", "item-2", "item-3"],
+      "settings": {
+        "eyebrow": "Reach Out",
+        "heading": "Contact Us",
+        "intro_text": "Have a question about our products, your order, or want to know more about our heritage? We'd love to hear from you.",
+        "form_heading": "Send us a Message",
+        "store_heading": "Visit Our Store",
+        "store_address": "<p>Viha Heritage Store<br>Bishop Garden, Raja Annamalaipuram<br>Chennai, Tamil Nadu 600 028<br>India</p>",
+        "note_heading": "International customers:",
+        "note_text": "We respond within 24 hours on working days. For urgent order queries, please include your order number in the subject line."
+      }
+    }
+  },
+  "order": ["main"]
+}

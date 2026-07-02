@@ -1,0 +1,102 @@
+{%- comment -%}
+
+  Related Products — uses Shopify's native product recommendations engine, so each
+  product page shows items genuinely related to the product being viewed (based on
+  Shopify's own sales/browsing data), not one static collection repeated everywhere.
+  This section renders in two modes:
+    1. Normal page load — shows a loading skeleton, then fetches recommendations via JS.
+    2. Recommendations fetch (recommendations.performed) — outputs just the product grid.
+{%- endcomment -%}
+{%- if recommendations.performed -%}
+  {%- if recommendations.products_count > 0 -%}
+    <div class="collection-grid">
+      {%- for product in recommendations.products -%}
+        {% render 'product-card', product: product, lazy: true %}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+{%- else -%}
+  <section class="section section--paper" id="related-products-{{ section.id }}">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:2.5rem;">
+        <span class="section__eyebrow">{{ section.settings.eyebrow | default: 'You May Also Like' }}</span>
+        <h2 class="section__heading">{{ section.settings.heading | default: 'Related Products' }}</h2>
+        <div class="section__ornament" aria-hidden="true">
+          <div class="section__ornament-line section__ornament-line--left"></div>
+          <div class="section__ornament-diamond"></div>
+          <div class="section__ornament-line section__ornament-line--right"></div>
+        </div>
+      </div>
+      <div id="related-products-grid-{{ section.id }}"
+        data-related-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_to_show }}&intent=related">
+        <div class="collection-grid" aria-hidden="true">
+          {%- for i in (1..section.settings.products_to_show) -%}
+            <div style="background:var(--color-cream);border-radius:4px;aspect-ratio:4/5;animation:pulse 1.5s ease-in-out infinite;"></div>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      {%- comment -%} Skip GST tax-rate collections — detect by "gst" in handle/title, not a fixed list (see product-template.liquid for why) {%- endcomment -%}
+      {%- assign related_collection = blank -%}
+      {%- for c in product.collections -%}
+        {%- if related_collection == blank -%}
+          {%- assign c_title_lower_rp = c.title | downcase -%}
+          {%- unless c.handle contains 'gst' or c_title_lower_rp contains 'gst' -%}
+            {%- assign related_collection = c -%}
+          {%- endunless -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if section.settings.show_view_more and related_collection != blank -%}
+        <div style="text-align:center;margin-top:2.5rem;">
+          <a href="{{ related_collection.url }}" class="btn btn--ghost" style="margin:0 auto;">
+            {{ section.settings.view_more_label | default: 'View More Related Products' }}
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+            </svg>
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+
+  <style>@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }</style>
+
+  <script>
+  (function() {
+    var wrap = document.getElementById('related-products-grid-{{ section.id }}');
+    if (!wrap) return;
+    var url = wrap.getAttribute('data-related-url');
+    fetch(url)
+      .then(function(r) { return r.text(); })
+      .then(function(html) {
+        var doc = new DOMParser().parseFromString(html, 'text/html');
+        var newGrid = doc.querySelector('.collection-grid');
+        if (newGrid && newGrid.children.length > 0) {
+          wrap.innerHTML = '';
+          wrap.appendChild(newGrid);
+        } else {
+          var section = document.getElementById('related-products-{{ section.id }}');
+          if (section) section.hidden = true;
+        }
+      })
+      .catch(function() {
+        var section = document.getElementById('related-products-{{ section.id }}');
+        if (section) section.hidden = true;
+      });
+  })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Related Products",
+  "settings": [
+    { "type": "text",  "id": "eyebrow",           "label": "Eyebrow",          "default": "You May Also Like" },
+    { "type": "text",  "id": "heading",           "label": "Heading",          "default": "Related Products" },
+    { "type": "range", "id": "products_to_show",  "label": "Products to show", "min": 2, "max": 8, "step": 1, "default": 4 },
+    { "type": "checkbox", "id": "show_view_more", "label": "Show 'View More' button", "info": "Links to the product's own collection", "default": true },
+    { "type": "text",  "id": "view_more_label",   "label": "View More button label", "default": "View More Related Products" }
+  ],
+  "presets": [{ "name": "Related Products" }]
+}
+{% endschema %}

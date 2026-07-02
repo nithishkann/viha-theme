@@ -57,7 +57,7 @@
       </div>
 
       <select data-sort-select aria-label="Sort products"
-        style="padding:9px 32px 9px 12px;border:1px solid var(--color-cream-dark);background:var(--color-paper);font-size:11px;font-weight:600;font-family:inherit;color:var(--color-charcoal);cursor:pointer;outline:none;border-radius:2px;appearance:none;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%232D2D2D' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 10px center;">
+        style="padding:9px 32px 9px 12px;border:1px solid var(--color-cream-dark);background:var(--color-paper);font-size:11px;font-weight:600;font-family:inherit;color:var(--color-charcoal);cursor:pointer;outline:none;border-radius:2px;appearance:none;background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2712%27 height=%2712%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%232D2D2D%27 stroke-width=%272%27%3E%3Cpath d=%27M6 9l6 6 6-6%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right 10px center;">
         <option value="manual"             {% if current_sort == 'manual' %}selected{% endif %}>Featured</option>
         <option value="best-selling"       {% if current_sort == 'best-selling' %}selected{% endif %}>Best Selling</option>
         <option value="price-ascending"    {% if current_sort == 'price-ascending' %}selected{% endif %}>Price: Low–High</option>
@@ -67,12 +67,12 @@
       </select>
 
       <span id="catalog-count" style="font-size:11px;color:var(--color-muted);flex:1;text-align:right;white-space:nowrap;">
-        {{ col.products_count }} product{{ col.products_count | plural: '', 's' }}
+        {{ col.products_count }} product{{ col.products_count | pluralize: '', 's' }}
       </span>
 
       {%- comment -%} Mobile-only filter toggle {%- endcomment -%}
       <button id="catalog-filter-toggle" aria-expanded="false" aria-controls="catalog-sidebar"
-        style="display:flex;align-items:center;gap:6px;padding:9px 14px;border:1px solid var(--color-cream-dark);background:var(--color-paper);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;cursor:pointer;border-radius:2px;color:var(--color-charcoal);transition:all 0.15s;"
+        style="align-items:center;gap:6px;padding:9px 14px;border:1px solid var(--color-cream-dark);background:var(--color-paper);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;cursor:pointer;border-radius:2px;color:var(--color-charcoal);transition:all 0.15s;"
         onmouseover="this.style.borderColor='var(--color-maroon)'" onmouseout="this.style.borderColor='var(--color-cream-dark)'" class="catalog-filter-btn">
         <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"/>
@@ -184,6 +184,7 @@
 <style>
 /* Mobile pills scrollbar */
 .catalog-pills-mobile::-webkit-scrollbar { display: none; }
+.catalog-filter-btn { display: flex; }
 
 /* Layout */
 .catalog-layout {

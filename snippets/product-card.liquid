@@ -16,7 +16,7 @@
         src="{{ card_product.featured_image | img_url: '500x625', crop: 'center' }}"
         alt="{{ card_product.featured_image.alt | default: card_product.title | escape }}"
         width="500" height="625"
-        loading="{{ lazy | iif: 'lazy', 'eager' }}"
+        loading="{% if lazy %}lazy{% else %}eager{% endif %}"
         itemprop="image"
       >
     {% else %}
