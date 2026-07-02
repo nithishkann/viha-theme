@@ -1,0 +1,127 @@
+{
+  "sections": {
+    "hero": {
+      "type": "beauty-hero",
+      "blocks": {
+        "trust-1": { "type": "trust_item", "settings": { "text": "100% Natural Ingredients" } },
+        "trust-2": { "type": "trust_item", "settings": { "text": "No Parabens or SLS" } },
+        "trust-3": { "type": "trust_item", "settings": { "text": "Cruelty Free" } },
+        "trust-4": { "type": "trust_item", "settings": { "text": "Ayurvedic Formulations" } }
+      },
+      "block_order": ["trust-1", "trust-2", "trust-3", "trust-4"],
+      "settings": {
+        "eyebrow": "Viha Beauty & Wellness",
+        "heading": "Ancestral Beauty, Timeless Ritual.",
+        "subtext": "Plant-based formulations rooted in five thousand years of Ayurvedic wisdom.",
+        "cta_primary_label": "Explore Collection",
+        "cta_primary_url": "/collections/ayurveda-herbal",
+        "cta_secondary_label": "Beauty Journal"
+      }
+    },
+    "shop-by-concern": {
+      "type": "beauty-shop-by-concern",
+      "blocks": {
+        "concern-1": { "type": "concern", "settings": { "title": "Dry Skin", "icon": "droplet", "collection": "dry-skin" } },
+        "concern-2": { "type": "concern", "settings": { "title": "Radiant Glow", "icon": "sparkle", "collection": "radiant-glow" } },
+        "concern-3": { "type": "concern", "settings": { "title": "Acne & Blemishes", "icon": "filter", "collection": "acne-blemishes" } },
+        "concern-4": { "type": "concern", "settings": { "title": "Anti-Aging", "icon": "clock", "collection": "anti-aging" } },
+        "concern-5": { "type": "concern", "settings": { "title": "Oily Skin", "icon": "sun", "collection": "oily-skin" } },
+        "concern-6": { "type": "concern", "settings": { "title": "Sensitive Skin", "icon": "heart", "collection": "sensitive-skin" } },
+        "concern-7": { "type": "concern", "settings": { "title": "Night Repair", "icon": "moon", "collection": "night-repair" } },
+        "concern-8": { "type": "concern", "settings": { "title": "Scalp Health", "icon": "arrow-up", "collection": "scalp-health" } }
+      },
+      "block_order": ["concern-1", "concern-2", "concern-3", "concern-4", "concern-5", "concern-6", "concern-7", "concern-8"],
+      "settings": {
+        "eyebrow": "Personalised Care",
+        "heading": "Shop by Concern"
+      }
+    },
+    "collections": {
+      "type": "beauty-collections",
+      "blocks": {
+        "col-1": { "type": "collection_card", "settings": { "collection": "handmade-soaps", "title": "Handmade Soaps", "description": "Cold-process herbal soaps with sacred botanicals for a gentle ritual cleanse." } },
+        "col-2": { "type": "collection_card", "settings": { "collection": "ayurvedic-oils", "title": "Ayurvedic Oils", "description": "Time-extracted blends from seeds, flowers and roots for face, scalp and body." } },
+        "col-3": { "type": "collection_card", "settings": { "collection": "natural-perfumes", "title": "Natural Perfumes", "description": "Alcohol-free attars and roll-ons distilled from pure floral and resinous sources." } }
+      },
+      "block_order": ["col-1", "col-2", "col-3"],
+      "settings": {
+        "eyebrow": "Curated For You",
+        "heading": "Our Collections"
+      }
+    },
+    "bestsellers": {
+      "type": "beauty-bestsellers",
+      "settings": {
+        "eyebrow": "Most Loved",
+        "heading": "Beauty Best Sellers",
+        "collection": "ayurveda-herbal",
+        "products_to_show": 8
+      }
+    },
+    "ritual": {
+      "type": "beauty-ritual",
+      "blocks": {
+        "step-1": { "type": "step", "settings": { "title": "Cleanse", "description": "Begin with a handmade herbal soap — neem, red sandalwood or tulsi. Let it draw impurities gently while preserving the skin's natural pH." } },
+        "step-2": { "type": "step", "settings": { "title": "Exfoliate", "description": "Use the vetiver root scrub or ubtan paste twice a week to slough dead cells and stimulate circulation, revealing fresh, bright skin." } },
+        "step-3": { "type": "step", "settings": { "title": "Nourish", "description": "Apply two to three drops of Kumkumadi oil or your chosen Ayurvedic facial blend. Press into warm skin — never rub." } },
+        "step-4": { "type": "step", "settings": { "title": "Seal", "description": "Finish with sandalwood or rose-based moisture cream to lock in actives. Fragrance becomes a closing breath of the ritual." } }
+      },
+      "block_order": ["step-1", "step-2", "step-3", "step-4"],
+      "settings": {
+        "eyebrow": "4-Step Practice",
+        "heading": "The Traditional Beauty Ritual",
+        "subtext": "Ayurvedic beauty is not a routine — it is a dialogue with your body. Each step responds to your skin's intelligence.",
+        "cta_label": "Start Your Ritual",
+        "cta_url": "/collections/ayurveda-herbal"
+      }
+    },
+    "ingredients": {
+      "type": "beauty-ingredients",
+      "blocks": {
+        "ing-1": { "type": "ingredient", "settings": { "title": "Kumkumadi", "tagline": "Liquid Gold", "description": "Brightens complexion and reduces pigmentation with saffron and sesame base.", "collection": "ingredient-kumkumadi" } },
+        "ing-2": { "type": "ingredient", "settings": { "title": "Neem", "tagline": "Nature's Antibiotic", "description": "Purifies skin and combats acne-causing bacteria while soothing redness and surface irritation.", "collection": "ingredient-neem" } },
+        "ing-3": { "type": "ingredient", "settings": { "title": "Turmeric", "tagline": "Golden Healer", "description": "Anti-inflammatory powerhouse — reduces dark spots and evens tone while accelerating healing.", "collection": "ingredient-turmeric" } },
+        "ing-4": { "type": "ingredient", "settings": { "title": "Red Sandalwood", "tagline": "Sacred Coolant", "description": "Cooling astringent and antibacterial — calms pitta and brings evenness to oily complexions.", "collection": "ingredient-red-sandalwood" } },
+        "ing-5": { "type": "ingredient", "settings": { "title": "Vetiver", "tagline": "Root of Calm", "description": "Detoxifying and cooling — exfoliates skin while delivering earthy aromatherapy and grounding energy.", "collection": "ingredient-vetiver" } }
+      },
+      "block_order": ["ing-1", "ing-2", "ing-3", "ing-4", "ing-5"],
+      "settings": {
+        "eyebrow": "Know Your Botanicals",
+        "heading": "Ingredient Spotlight",
+        "subtext": "We trace every ingredient to its classical Ayurvedic text then to its source. This is not marketing — it is accountability."
+      }
+    },
+    "reviews": {
+      "type": "beauty-reviews",
+      "blocks": {
+        "review-1": { "type": "review", "settings": { "rating": 5, "name": "Priya Venkataraman", "location": "Chennai", "product": "Handmade Red Sandalwood Soap", "quote": "The sandalwood soap is pure luxury. The fragrance lingers gently and my skin feels smooth without feeling stripped. I've ordered four bars now." } },
+        "review-2": { "type": "review", "settings": { "rating": 5, "name": "Meera Krishnamurthy", "location": "Bengaluru", "product": "Heritage Vetiver Bath Scrub", "quote": "This scrub is the real thing — I've tried so many branded versions and nothing compares. The earthy vetiver scent is completely grounding." } },
+        "review-3": { "type": "review", "settings": { "rating": 5, "name": "Ananya Subramaniam", "location": "Mumbai", "product": "Divine Jasmine Attar", "quote": "Alcohol-free and long-lasting — it smells exactly like fresh jasmine garlands. Not sweet and not artificial. This is what attar should be." } }
+      },
+      "block_order": ["review-1", "review-2", "review-3"],
+      "settings": {
+        "eyebrow": "Real Results",
+        "heading": "What Our Customers Say"
+      }
+    },
+    "journal": {
+      "type": "beauty-journal",
+      "settings": {
+        "eyebrow": "Education & Ritual",
+        "heading": "Beauty Journal",
+        "posts_to_show": 3,
+        "empty_message": "Our Beauty Journal is launching soon — check back for Ayurvedic rituals and skincare wisdom from Mrs Anitha Kuppusamy."
+      }
+    },
+    "newsletter": {
+      "type": "beauty-newsletter",
+      "settings": {
+        "eyebrow": "Beauty Newsletter",
+        "heading": "The Beauty Digest",
+        "subtext": "Seasonal rituals and Ayurvedic wisdom from Mrs Anitha Kuppusamy — plus early access to new formulations.",
+        "button_label": "Subscribe"
+      }
+    }
+  },
+  "order": ["hero", "shop-by-concern", "collections", "bestsellers", "ritual", "ingredients", "reviews", "journal", "newsletter"]
+}

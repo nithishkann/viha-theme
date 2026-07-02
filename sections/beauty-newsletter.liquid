@@ -1,0 +1,35 @@
+{%- comment -%} Beauty page newsletter signup — editable heading/subtext {%- endcomment -%}
+<section style="padding:5rem 3rem;background:var(--color-maroon-dark);text-align:center;position:relative;overflow:hidden;">
+  <div style="position:absolute;inset:0;opacity:0.07;background-image:radial-gradient(circle,#B8893D 1px,transparent 1px);background-size:16px 16px;pointer-events:none;"></div>
+  <div style="max-width:480px;margin:0 auto;position:relative;z-index:1;">
+    <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" style="color:var(--color-gold);margin:0 auto 1.25rem;display:block;" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/>
+    </svg>
+    <span style="display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--color-gold);margin-bottom:0.75rem;">{{ section.settings.eyebrow | default: 'Beauty Newsletter' }}</span>
+    <h2 style="font-family:var(--font-heading);font-size:clamp(1.25rem,3vw,1.875rem);font-weight:900;color:#fff;margin-bottom:1rem;">{{ section.settings.heading | default: 'The Beauty Digest' }}</h2>
+    <p style="font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:2rem;line-height:1.75;">{{ section.settings.subtext | default: 'Seasonal rituals and Ayurvedic wisdom from Mrs Anitha Kuppusamy — plus early access to new formulations.' }}</p>
+    {% form 'customer', id: 'beauty-newsletter' %}
+      <div style="display:flex;gap:8px;max-width:400px;margin:0 auto;">
+        <input type="hidden" name="contact[tags]" value="newsletter,beauty">
+        <label for="beauty-email" class="sr-only">Email address</label>
+        <input type="email" name="contact[email]" id="beauty-email" required placeholder="your@email.com" aria-label="Email address"
+          style="flex:1;padding:14px 16px;border:1px solid rgba(255,255,255,0.20);background:rgba(255,255,255,0.07);color:#fff;font-size:13px;border-radius:2px;font-family:inherit;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--color-gold)'" onblur="this.style.borderColor='rgba(255,255,255,0.20)'">
+        <button type="submit" class="btn btn--gold" style="padding:14px 20px;white-space:nowrap;font-size:11px;">{{ section.settings.button_label | default: 'Subscribe' }}</button>
+      </div>
+      <p style="font-size:10px;color:rgba(255,255,255,0.30);margin-top:12px;font-style:italic;">No spam. Unsubscribe anytime.</p>
+    {% endform %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Beauty Newsletter",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow text", "default": "Beauty Newsletter" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The Beauty Digest" },
+    { "type": "textarea", "id": "subtext", "label": "Subtext" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Subscribe" }
+  ],
+  "presets": [{ "name": "Beauty Newsletter" }]
+}
+{% endschema %}

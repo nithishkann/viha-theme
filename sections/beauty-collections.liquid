@@ -1,0 +1,68 @@
+{%- comment -%} Beauty page "Our Collections" — each card is a block: collection picker + description {%- endcomment -%}
+<section style="padding:4rem 3rem;background:var(--color-section-alt);border-top:1px solid var(--color-cream-dark);">
+  <div style="max-width:var(--max-w);margin:0 auto;">
+    <div style="text-align:center;margin-bottom:2.5rem;">
+      <span style="display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--color-gold);margin-bottom:0.75rem;">{{ section.settings.eyebrow | default: 'Curated For You' }}</span>
+      <h2 style="font-family:var(--font-heading);font-size:clamp(1.25rem,3vw,2rem);font-weight:900;color:var(--color-maroon);">{{ section.settings.heading | default: 'Our Collections' }}</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;">
+      {%- for block in section.blocks -%}
+        {%- assign feat_col = collections[block.settings.collection] -%}
+        <a href="{{ feat_col.url | default: '#' }}"
+          style="display:block;border:1px solid var(--color-cream-dark);border-top:2px solid transparent;border-radius:2px;overflow:hidden;background:var(--color-paper);transition:box-shadow 0.2s,border-top-color 0.2s;text-decoration:none;"
+          onmouseover="this.style.boxShadow='0 6px 20px rgba(0,0,0,0.10)';this.style.borderTopColor='var(--color-gold)'"
+          onmouseout="this.style.boxShadow='';this.style.borderTopColor='transparent'" {{ block.shopify_attributes }}>
+          <div style="aspect-ratio:3/2;overflow:hidden;position:relative;background:var(--color-cream);">
+            {%- if feat_col.image -%}
+              <img src="{{ feat_col.image | img_url: '800x' }}" alt="{{ feat_col.title }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s;filter:brightness(0.9);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform=''">
+            {%- else -%}
+              <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:rgba(15,90,67,0.20);">
+                <svg width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5z"/></svg>
+              </div>
+            {%- endif -%}
+            <span style="position:absolute;top:12px;left:12px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--color-gold);background:rgba(253,249,241,0.92);padding:3px 9px;border-radius:2px;">{{ feat_col.products_count | default: 0 }} product{{ feat_col.products_count | pluralize: "", "s" }}</span>
+          </div>
+          <div style="padding:1.25rem;">
+            <h3 style="font-family:var(--font-heading);font-size:1rem;font-weight:700;color:var(--color-maroon);margin-bottom:0.5rem;">{{ feat_col.title | default: block.settings.title }}</h3>
+            <p style="font-size:12px;color:rgba(45,45,45,0.65);line-height:1.65;margin-bottom:0.75rem;">{{ block.settings.description }}</p>
+            <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--color-maroon);display:inline-flex;align-items:center;gap:5px;">
+              Shop Now
+              <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+            </span>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Beauty Collections Grid",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow text", "default": "Curated For You" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Our Collections" }
+  ],
+  "blocks": [
+    {
+      "type": "collection_card",
+      "name": "Collection card",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "title", "label": "Fallback title (used if collection isn't set yet)", "default": "Collection" },
+        { "type": "textarea", "id": "description", "label": "Description" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Beauty Collections Grid",
+      "blocks": [
+        { "type": "collection_card", "settings": { "title": "Handmade Soaps", "description": "Cold-process herbal soaps with sacred botanicals for a gentle ritual cleanse." } },
+        { "type": "collection_card", "settings": { "title": "Ayurvedic Oils", "description": "Time-extracted blends from seeds, flowers and roots for face, scalp and body." } },
+        { "type": "collection_card", "settings": { "title": "Natural Perfumes", "description": "Alcohol-free attars and roll-ons distilled from pure floral and resinous sources." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
