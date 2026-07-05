@@ -137,10 +137,8 @@
 
       <h1 class="product-info__name" itemprop="name">{{ current_product.title }}</h1>
 
-      <div style="display:flex;align-items:center;gap:8px;margin:0.75rem 0;">
-        <div style="display:flex;color:var(--color-gold);font-size:14px;" aria-label="4.5 out of 5 stars">★★★★<span style="opacity:0.3">★</span></div>
-        <span style="font-size:11px;color:rgba(45,45,45,0.5);">({{ current_product.metafields.reviews.rating_count | default: '24' }} reviews)</span>
-      </div>
+      {%- comment -%} Judge.me preview badge — real stars + count, links to the reviews widget; empty until there are reviews {%- endcomment -%}
+      <div class="jdgm-widget jdgm-preview-badge" data-id="{{ current_product.id }}" style="margin:0.75rem 0;"></div>
 
       <div class="product-info__price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
         <meta itemprop="priceCurrency" content="{{ cart.currency.iso_code }}">
@@ -160,9 +158,8 @@
     </div>
 
     {%- comment -%} Mobile-only: star rating (price is already in product-mob-bar) {%- endcomment -%}
-    <div class="product-info__mob-rating" style="align-items:center;gap:8px;margin-bottom:0.75rem;">
-      <div style="display:flex;color:var(--color-gold);font-size:14px;" aria-hidden="true">★★★★<span style="opacity:0.3">★</span></div>
-      <span style="font-size:11px;color:rgba(45,45,45,0.5);">({{ current_product.metafields.reviews.rating_count | default: '24' }} reviews)</span>
+    <div class="product-info__mob-rating" style="margin-bottom:0.75rem;">
+      <div class="jdgm-widget jdgm-preview-badge" data-id="{{ current_product.id }}"></div>
     </div>
 
     <div class="product-info__desc" itemprop="description">{{ current_product.description }}</div>
@@ -260,51 +257,11 @@
 
 {%- comment -%} Video moved into the gallery column above — no separate full-width section needed {%- endcomment -%}
 
-{%- comment -%} ── Customer Reviews ─────────────────────────────────────── {%- endcomment -%}
-
-{%- comment -%}
-  Reviews list defined FIRST so we can compute aggregate stats before the summary card.
-  Format: name|city|verified|stars|title|body|helpful_count
-  Replace with Judge.me / Yotpo app embed when ready.
+{%- comment -%} ── Customer Reviews — powered by Judge.me ──────────────────
+  Real reviews render via the Judge.me app widget below (it also supplies its own
+  "Write a Review" form). The star badge near the title uses Judge.me's preview
+  badge. No hardcoded/placeholder review data lives in the theme.
 {%- endcomment -%}
-{%- assign review_items = "Priya Narayanan|Chennai|true|5|Exceeded all expectations|This product exceeded every expectation. The quality is exceptional — you can feel the care that went into making it. Will definitely order again.|12~Meera Subramaniam|Bengaluru|true|5|Authentic and superior quality|Beautifully packaged and arrives promptly. The craftsmanship is authentic and far superior to anything available in modern retail.|8~Ananya Krishnan|Mumbai|false|4|Highly satisfied — want a larger size|Very satisfied with the purchase. Arrives beautifully wrapped. The only reason I'm giving 4 stars is that I'd love a slightly larger size option.|5~Kavitha Rajan|Coimbatore|true|5|Pure and fragrant|I have been using this for years and this is the best quality I have found online. The fragrance is pure and long-lasting. Highly recommend!|14~Sundar Krishnamurthy|Chennai|true|5|Great for daily pooja|Perfect for our daily pooja rituals. Arrived quickly and packaged well. My family noticed the quality immediately.|7~Nithya Devi|Madurai|false|3|Good but delivery was slow|Product quality is good but delivery took longer than expected. Will order again but hope the shipping improves.|2~Ramya Suresh|Hyderabad|true|5|Best purchase this month|Outstanding product. I was skeptical ordering online but the quality and packaging impressed me completely. Already placed a second order.|9" | split: "~" -%}
-
-{%- comment -%}
-  Compute star distribution + average from the actual review array.
-  Prefer real metafield values (set by Judge.me / Shopify Product Reviews app);
-  fall back to values computed from the static array above.
-{%- endcomment -%}
-{%- assign _s5 = 0 -%}{%- assign _s4 = 0 -%}{%- assign _s3 = 0 -%}{%- assign _s2 = 0 -%}{%- assign _s1 = 0 -%}{%- assign _sum = 0 -%}
-{%- for _rev in review_items -%}
-  {%- assign _rp = _rev | split: "|" -%}
-  {%- assign _rs = _rp[3] | times: 1 -%}
-  {%- assign _sum = _sum | plus: _rs -%}
-  {%- case _rs -%}
-    {%- when 5 -%}{%- assign _s5 = _s5 | plus: 1 -%}
-    {%- when 4 -%}{%- assign _s4 = _s4 | plus: 1 -%}
-    {%- when 3 -%}{%- assign _s3 = _s3 | plus: 1 -%}
-    {%- when 2 -%}{%- assign _s2 = _s2 | plus: 1 -%}
-    {%- when 1 -%}{%- assign _s1 = _s1 | plus: 1 -%}
-  {%- endcase -%}
-{%- endfor -%}
-{%- assign _local_count = review_items.size -%}
-{%- assign _computed_avg = _sum | times: 1.0 | divided_by: _local_count | round: 1 -%}
-
-{%- assign rating_val   = current_product.metafields.reviews.rating.value -%}
-{%- assign rating_count = current_product.metafields.reviews.rating_count.value -%}
-{%- if rating_val   == blank or rating_val   == 0 -%}{%- assign rating_val   = _computed_avg -%}{%- endif -%}
-{%- if rating_count == blank or rating_count == 0 -%}{%- assign rating_count = _local_count -%}{%- endif -%}
-
-{%- comment -%} Percentage fill for the double-layer star widget {%- endcomment -%}
-{%- assign star_fill_pct = rating_val | times: 100 | divided_by: 5.0 | round -%}
-
-{%- comment -%} Bar widths computed from actual star counts (never hardcoded) {%- endcomment -%}
-{%- assign pct_5 = _s5 | times: 100 | divided_by: _local_count -%}
-{%- assign pct_4 = _s4 | times: 100 | divided_by: _local_count -%}
-{%- assign pct_3 = _s3 | times: 100 | divided_by: _local_count -%}
-{%- assign pct_2 = _s2 | times: 100 | divided_by: _local_count -%}
-{%- assign pct_1 = _s1 | times: 100 | divided_by: _local_count -%}
-
 <section style="max-width:var(--max-w);margin:0 auto;padding:4rem 3rem 5rem;border-top:1px solid var(--color-cream-dark);">
   <div style="text-align:center;margin-bottom:3rem;">
     <span style="display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--color-gold);margin-bottom:0.75rem;">Real Results</span>
@@ -316,222 +273,11 @@
     </div>
   </div>
 
-  <div class="reviews-body-grid" style="display:grid;grid-template-columns:1fr;gap:2.5rem;">
-
-    {%- comment -%} Rating summary panel {%- endcomment -%}
-    <div style="background:var(--color-paper);border:1px solid var(--color-cream-dark);border-radius:2px;padding:2rem;max-width:380px;margin:0 auto;width:100%;">
-      <div style="text-align:center;padding-bottom:1.5rem;border-bottom:1px solid var(--color-cream-dark);margin-bottom:1.5rem;">
-        <div style="font-family:var(--font-heading);font-size:3.5rem;font-weight:900;color:var(--color-maroon);line-height:1;">{{ rating_val }}</div>
-
-        {%- comment -%} 1. Force the rating into a valid float number for math {%- endcomment -%}
-        {%- assign num_rating = rating_val | times: 1.0 -%}
-        {%- if num_rating == 0 and rating_val != 0 and rating_val != "0" -%}
-          {%- assign num_rating = rating_val.rating | times: 1.0 -%}
-        {%- endif -%}
-
-        {%- comment -%} 2. Calculate the exact percentage {%- endcomment -%}
-        {%- assign star_fill_pct = num_rating | divided_by: 5.0 | times: 100.0 | round -%}
-
-        {%- comment -%} 3. Render the widget {%- endcomment -%}
-        <div style="position:relative; display:inline-flex; margin:8px 0;" aria-label="{{ num_rating }} out of 5 stars">
-
-          <div style="display:flex; gap:3px;" aria-hidden="true">
-            {%- for _i in (1..5) -%}
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" style="color:rgba(184,137,61,0.22); flex-shrink:0;">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-              </svg>
-            {%- endfor -%}
-          </div>
-
-          <div style="position:absolute; top:0; left:0; height:100%; width:{{ star_fill_pct }}%; overflow:hidden; display:flex; gap:3px;" aria-hidden="true">
-            {%- for _i in (1..5) -%}
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" style="color:#B8893D; flex-shrink:0;">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-              </svg>
-            {%- endfor -%}
-          </div>
-
-        </div>
-
-        <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:rgba(45,45,45,0.45);">Based on {{ rating_count }} reviews</p>
-      </div>
-
-      {%- comment -%} Distribution bars — computed from actual review array, not hardcoded {%- endcomment -%}
-      {%- assign _bar_stars = "5,_s5,pct_5|4,_s4,pct_4|3,_s3,pct_3|2,_s2,pct_2|1,_s1,pct_1" | split: "|" -%}
-      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:1.5rem;">
-        <div style="display:flex;align-items:center;gap:8px;font-size:11px;font-weight:600;color:rgba(45,45,45,0.70);">
-          <span style="width:10px;text-align:right;flex-shrink:0;">5</span>
-          <svg width="10" height="10" fill="currentColor" viewBox="0 0 24 24" style="color:var(--color-gold);flex-shrink:0;" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          <div style="flex:1;height:5px;background:rgba(45,45,45,0.10);border-radius:100px;overflow:hidden;"><div style="height:100%;background:var(--color-gold);width:{{ pct_5 }}%;border-radius:100px;"></div></div>
-          <span style="width:28px;text-align:right;color:rgba(45,45,45,0.40);font-size:10px;">{{ pct_5 }}%</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;font-size:11px;font-weight:600;color:rgba(45,45,45,0.70);">
-          <span style="width:10px;text-align:right;flex-shrink:0;">4</span>
-          <svg width="10" height="10" fill="currentColor" viewBox="0 0 24 24" style="color:var(--color-gold);flex-shrink:0;" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          <div style="flex:1;height:5px;background:rgba(45,45,45,0.10);border-radius:100px;overflow:hidden;"><div style="height:100%;background:var(--color-gold);width:{{ pct_4 }}%;border-radius:100px;"></div></div>
-          <span style="width:28px;text-align:right;color:rgba(45,45,45,0.40);font-size:10px;">{{ pct_4 }}%</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;font-size:11px;font-weight:600;color:rgba(45,45,45,0.70);">
-          <span style="width:10px;text-align:right;flex-shrink:0;">3</span>
-          <svg width="10" height="10" fill="currentColor" viewBox="0 0 24 24" style="color:var(--color-gold);flex-shrink:0;" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          <div style="flex:1;height:5px;background:rgba(45,45,45,0.10);border-radius:100px;overflow:hidden;"><div style="height:100%;background:var(--color-gold);width:{{ pct_3 }}%;border-radius:100px;"></div></div>
-          <span style="width:28px;text-align:right;color:rgba(45,45,45,0.40);font-size:10px;">{{ pct_3 }}%</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;font-size:11px;font-weight:600;color:rgba(45,45,45,0.70);">
-          <span style="width:10px;text-align:right;flex-shrink:0;">2</span>
-          <svg width="10" height="10" fill="currentColor" viewBox="0 0 24 24" style="color:var(--color-gold);flex-shrink:0;" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          <div style="flex:1;height:5px;background:rgba(45,45,45,0.10);border-radius:100px;overflow:hidden;"><div style="height:100%;background:var(--color-gold);width:{{ pct_2 }}%;border-radius:100px;"></div></div>
-          <span style="width:28px;text-align:right;color:rgba(45,45,45,0.40);font-size:10px;">{{ pct_2 }}%</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;font-size:11px;font-weight:600;color:rgba(45,45,45,0.70);">
-          <span style="width:10px;text-align:right;flex-shrink:0;">1</span>
-          <svg width="10" height="10" fill="currentColor" viewBox="0 0 24 24" style="color:var(--color-gold);flex-shrink:0;" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          <div style="flex:1;height:5px;background:rgba(45,45,45,0.10);border-radius:100px;overflow:hidden;"><div style="height:100%;background:var(--color-gold);width:{{ pct_1 }}%;border-radius:100px;"></div></div>
-          <span style="width:28px;text-align:right;color:rgba(45,45,45,0.40);font-size:10px;">{{ pct_1 }}%</span>
-        </div>
-      </div>
-
-      <button type="button" onclick="document.getElementById('review-modal').hidden=false;" style="width:100%;padding:11px;border:1px solid var(--color-maroon);background:transparent;color:var(--color-maroon);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;cursor:pointer;border-radius:2px;font-family:inherit;transition:all 0.2s;" onmouseover="this.style.background='var(--color-maroon)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='var(--color-maroon)'">
-        Write a Review
-      </button>
-    </div>
-    <div>
-      <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--color-cream-dark);padding-bottom:0.75rem;margin-bottom:1.75rem;flex-wrap:wrap;gap:8px;">
-        <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;color:rgba(45,45,45,0.40);">Most Recent</span>
-        <span id="rev-page-info" style="font-size:10px;color:rgba(45,45,45,0.40);font-weight:600;"></span>
-      </div>
-
-      <div id="reviews-list" style="display:flex;flex-direction:column;gap:0;border:1px solid var(--color-cream-dark);border-radius:2px;overflow:hidden;">
-        {%- for rev in review_items -%}
-          {%- assign rparts = rev | split: "|" -%}
-          {%- assign rev_stars = rparts[3] | times: 1 -%}
-          {%- assign rev_helpful = rparts[6] | times: 1 -%}
-          <div class="review-item" data-review-idx="{{ forloop.index0 }}" style="padding:1.5rem;{% unless forloop.last %}border-bottom:1px solid var(--color-cream-dark);{% endunless %}background:var(--color-paper);">
-            <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:0.625rem;flex-wrap:wrap;gap:8px;">
-              <div style="display:flex;align-items:center;gap:10px;">
-                <div style="width:36px;height:36px;border-radius:50%;background:var(--color-maroon);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-weight:700;font-size:14px;flex-shrink:0;" aria-hidden="true">{{ rparts[0] | slice: 0 }}</div>
-                <div>
-                  <div style="font-size:13px;font-weight:700;color:var(--color-charcoal);">{{ rparts[0] }}</div>
-                  {%- if rparts[2] == 'true' -%}
-                    <span style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#4d8b55;display:flex;align-items:center;gap:3px;">
-                      <svg width="10" height="10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                      Verified Buyer
-                    </span>
-                  {%- endif -%}
-                </div>
-              </div>
-              <span style="font-size:11px;color:rgba(45,45,45,0.45);">{{ rparts[1] }}</span>
-            </div>
-            <div style="display:flex;gap:2px;margin-bottom:0.5rem;" aria-label="{{ rev_stars }} out of 5 stars">
-              {%- for s in (1..5) -%}
-                <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24" style="color:var(--color-gold);{% if s > rev_stars %}opacity:0.25;{% endif %}" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              {%- endfor -%}
-            </div>
-            {%- if rparts[4] != blank -%}
-              <p style="font-size:12px;font-weight:700;color:var(--color-charcoal);margin-bottom:0.35rem;">{{ rparts[4] }}</p>
-            {%- endif -%}
-            <p style="font-size:13px;color:rgba(45,45,45,0.80);line-height:1.75;margin-bottom:1rem;">{{ rparts[5] }}</p>
-
-            {%- comment -%} Helpful votes {%- endcomment -%}
-            <div class="review-helpful" style="display:flex;align-items:center;gap:12px;padding-top:0.75rem;border-top:1px solid var(--color-cream-dark);">
-              <span style="font-size:10px;color:rgba(45,45,45,0.45);font-weight:600;">Helpful?</span>
-              <button class="helpful-up-btn" onclick="vihaHelpful(this,{{ forloop.index0 }},true)"
-                style="display:flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid var(--color-cream-dark);border-radius:2px;background:transparent;cursor:pointer;font-size:11px;color:rgba(45,45,45,0.60);font-family:inherit;transition:all 0.15s;"
-                aria-label="Mark review as helpful">
-                <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3H14z"/><path stroke-linecap="round" stroke-linejoin="round" d="M7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/></svg>
-                <span class="helpful-up-count">{{ rev_helpful }}</span>
-              </button>
-              <button class="helpful-down-btn" onclick="vihaHelpful(this,{{ forloop.index0 }},false)"
-                style="display:flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid var(--color-cream-dark);border-radius:2px;background:transparent;cursor:pointer;font-size:11px;color:rgba(45,45,45,0.60);font-family:inherit;transition:all 0.15s;"
-                aria-label="Mark review as not helpful">
-                <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true" style="transform:scaleY(-1)"><path stroke-linecap="round" stroke-linejoin="round" d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3H14z"/><path stroke-linecap="round" stroke-linejoin="round" d="M7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/></svg>
-                <span class="helpful-down-count">0</span>
-              </button>
-              {%- if rev_helpful > 0 -%}
-                <span class="helpful-msg" style="font-size:10px;color:rgba(45,45,45,0.45);font-style:italic;">{{ rev_helpful }} {{ rev_helpful | pluralize: 'customer', 'customers' }} found this helpful</span>
-              {%- else -%}
-                <span class="helpful-msg" style="font-size:10px;color:rgba(45,45,45,0.45);font-style:italic;display:none;"></span>
-              {%- endif -%}
-            </div>
-          </div>
-        {%- endfor -%}
-      </div>
-
-      {%- comment -%} Pagination {%- endcomment -%}
-      <div id="reviews-pagination" style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:1.5rem;">
-        <button id="rev-prev" onclick="vihaRevPage(-1)" style="padding:8px 18px;border:1px solid var(--color-cream-dark);background:var(--color-paper);color:var(--color-charcoal);font-size:11px;font-weight:700;border-radius:2px;cursor:pointer;font-family:inherit;transition:all 0.15s;" aria-label="Previous reviews page">← Prev</button>
-        <span id="rev-page-dots" style="display:flex;gap:6px;"></span>
-        <button id="rev-next" onclick="vihaRevPage(1)" style="padding:8px 18px;border:1px solid var(--color-cream-dark);background:var(--color-paper);color:var(--color-charcoal);font-size:11px;font-weight:700;border-radius:2px;cursor:pointer;font-family:inherit;transition:all 0.15s;" aria-label="Next reviews page">Next →</button>
-      </div>
-    </div>
-
-  </div>
+  {%- comment -%} Judge.me review widget — hydrated by the app script (loaded via content_for_header) {%- endcomment -%}
+  <div class="jdgm-widget jdgm-review-widget"
+       data-id="{{ current_product.id }}"
+       data-product-title="{{ current_product.title | escape }}"></div>
 </section>
-
-{%- comment -%} ── Write a Review Modal ──────────────────────────────────── {%- endcomment -%}
-<div id="review-modal" role="dialog" aria-modal="true" aria-labelledby="review-modal-title" hidden style="position:fixed;inset:0;z-index:8000;align-items:center;justify-content:center;padding:1rem;">
-  <div style="position:absolute;inset:0;background:rgba(0,0,0,0.55);backdrop-filter:blur(4px);" onclick="document.getElementById('review-modal').hidden=true;" aria-hidden="true"></div>
-  <div style="position:relative;z-index:1;background:#fdf9f1;border:1px solid var(--color-cream-dark);max-width:520px;width:100%;padding:2rem 1.75rem;border-radius:2px;box-shadow:0 24px 64px rgba(0,0,0,0.18);max-height:90vh;overflow-y:auto;">
-    <button onclick="document.getElementById('review-modal').hidden=true;" aria-label="Close" style="position:absolute;top:1rem;right:1rem;width:28px;height:28px;border-radius:50%;border:1px solid var(--color-cream-dark);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(45,45,45,0.5);transition:all 0.15s;" onmouseover="this.style.background='var(--color-maroon)';this.style.color='#fff';this.style.borderColor='var(--color-maroon)'" onmouseout="this.style.background='transparent';this.style.color='rgba(45,45,45,0.5)';this.style.borderColor='var(--color-cream-dark)'">
-      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-    </button>
-    <h2 id="review-modal-title" style="font-family:var(--font-heading);font-size:1.25rem;font-weight:900;color:var(--color-maroon);margin-bottom:0.25rem;">Write a Review</h2>
-    <p style="font-size:12px;color:rgba(45,45,45,0.55);margin-bottom:1.5rem;">{{ current_product.title }}</p>
-
-    <div id="review-form-wrap">
-      <div style="margin-bottom:1.25rem;">
-        <label style="display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:rgba(45,45,45,0.7);margin-bottom:6px;">Your Rating <span style="color:var(--color-maroon)">*</span></label>
-        <div id="star-picker" style="display:flex;gap:6px;">
-          {%- for i in (1..5) -%}
-            <button type="button" data-star="{{ i }}" onclick="vihaSetStar({{ i }})"
-              style="width:32px;height:32px;border:none;background:none;cursor:pointer;padding:0;color:rgba(45,45,45,0.2);transition:color 0.15s;"
-              aria-label="{{ i }} star">
-              <svg width="28" height="28" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            </button>
-          {%- endfor -%}
-        </div>
-        <input type="hidden" id="review-star-val" value="0">
-      </div>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1rem;">
-        <div>
-          <label for="rev-name" style="display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:rgba(45,45,45,0.7);margin-bottom:4px;">Name <span style="color:var(--color-maroon)">*</span></label>
-          <input id="rev-name" type="text" placeholder="Your name" style="width:100%;padding:8px 10px;border:1px solid var(--color-cream-dark);border-radius:2px;font-size:13px;font-family:inherit;background:var(--color-paper);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='var(--color-gold)'" onblur="this.style.borderColor='var(--color-cream-dark)'">
-        </div>
-        <div>
-          <label for="rev-city" style="display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:rgba(45,45,45,0.7);margin-bottom:4px;">City</label>
-          <input id="rev-city" type="text" placeholder="Your city" style="width:100%;padding:8px 10px;border:1px solid var(--color-cream-dark);border-radius:2px;font-size:13px;font-family:inherit;background:var(--color-paper);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='var(--color-gold)'" onblur="this.style.borderColor='var(--color-cream-dark)'">
-        </div>
-      </div>
-
-      <div style="margin-bottom:1rem;">
-        <label for="rev-title" style="display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:rgba(45,45,45,0.7);margin-bottom:4px;">Review Title</label>
-        <input id="rev-title" type="text" placeholder="Summarise your experience" style="width:100%;padding:8px 10px;border:1px solid var(--color-cream-dark);border-radius:2px;font-size:13px;font-family:inherit;background:var(--color-paper);outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='var(--color-gold)'" onblur="this.style.borderColor='var(--color-cream-dark)'">
-      </div>
-
-      <div style="margin-bottom:1.5rem;">
-        <label for="rev-body" style="display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:rgba(45,45,45,0.7);margin-bottom:4px;">Your Review <span style="color:var(--color-maroon)">*</span></label>
-        <textarea id="rev-body" rows="4" placeholder="Share your experience with this product…" style="width:100%;padding:8px 10px;border:1px solid var(--color-cream-dark);border-radius:2px;font-size:13px;font-family:inherit;background:var(--color-paper);outline:none;resize:vertical;box-sizing:border-box;" onfocus="this.style.borderColor='var(--color-gold)'" onblur="this.style.borderColor='var(--color-cream-dark)'"></textarea>
-      </div>
-
-      <p id="rev-error" style="font-size:11px;color:#c0392b;margin-bottom:0.75rem;display:none;"></p>
-
-      <button onclick="vihaSubmitReview()" style="width:100%;padding:13px;background:var(--color-maroon);color:#fff;border:none;font-family:inherit;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;border-radius:2px;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='var(--color-maroon-dark)'" onmouseout="this.style.background='var(--color-maroon)'">
-        Submit Review
-      </button>
-      <p style="font-size:10px;color:rgba(45,45,45,0.4);text-align:center;margin-top:0.75rem;">Reviews are moderated and published within 24–48 hours.</p>
-    </div>
-
-    <div id="review-success" hidden style="text-align:center;padding:2rem 0;">
-      <div style="width:52px;height:52px;border-radius:50%;background:rgba(77,139,85,0.1);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;">
-        <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="color:#4d8b55;" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-      </div>
-      <h3 style="font-family:var(--font-heading);font-size:1.1rem;font-weight:900;color:var(--color-maroon);margin-bottom:0.5rem;">Thank You!</h3>
-      <p style="font-size:13px;color:rgba(45,45,45,0.65);line-height:1.7;">Your review has been submitted and will appear after moderation. We appreciate you taking the time to share your experience.</p>
-      <button onclick="document.getElementById('review-modal').hidden=true;" style="margin-top:1.25rem;padding:10px 24px;border:1px solid var(--color-maroon);background:transparent;color:var(--color-maroon);font-family:inherit;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;border-radius:2px;cursor:pointer;">Close</button>
-    </div>
-  </div>
-</div>
 
 <style>
 /* Sticky product gallery on desktop */
@@ -550,10 +296,6 @@
 }
 .product-wishlist-btn.is-saved svg { fill: currentColor; }
 .product-wishlist-btn:hover { background: var(--color-cream); border-color: var(--color-maroon); }
-/* Reviews grid on desktop */
-@media (min-width: 768px) {
-  .reviews-body-grid { grid-template-columns: 320px 1fr !important; }
-}
 /* Full HTML description from Shopify product body */
 .product-info__desc { font-size: 13px; color: rgba(45,45,45,0.80); line-height: 1.8; margin: 0.75rem 0 1.25rem; }
 .product-info__desc p { margin-bottom: 0.75rem; }
@@ -561,8 +303,6 @@
 .product-info__desc li { margin-bottom: 0.35rem; }
 .product-info__desc strong, .product-info__desc b { font-weight: 700; color: var(--color-charcoal); }
 .product-info__desc a { color: var(--color-maroon); text-decoration: underline; }
-/* Review modal — display:flex only when not hidden (hidden attr sets display:none) */
-#review-modal:not([hidden]) { display: flex; }
 </style>
 
 <script>
@@ -579,135 +319,6 @@
         btn.style.opacity = '1';
       });
     });
-
-    // ── Reviews pagination ─────────────────────────────────────────────────
-    var REV_PER_PAGE = 4;
-    var revCurrentPage = 1;
-    var revItems = document.querySelectorAll('.review-item');
-    var revTotal = revItems.length;
-    var revTotalPages = Math.max(1, Math.ceil(revTotal / REV_PER_PAGE));
-
-    function vihaRevShow(page) {
-      revCurrentPage = Math.max(1, Math.min(page, revTotalPages));
-      revItems.forEach(function(item, i) {
-        var start = (revCurrentPage - 1) * REV_PER_PAGE;
-        item.style.display = (i >= start && i < start + REV_PER_PAGE) ? '' : 'none';
-      });
-      var info = document.getElementById('rev-page-info');
-      if (info) info.textContent = 'Page ' + revCurrentPage + ' of ' + revTotalPages;
-      var prev = document.getElementById('rev-prev');
-      var next = document.getElementById('rev-next');
-      if (prev) { prev.disabled = revCurrentPage === 1; prev.style.opacity = revCurrentPage === 1 ? '0.35' : '1'; }
-      if (next) { next.disabled = revCurrentPage === revTotalPages; next.style.opacity = revCurrentPage === revTotalPages ? '0.35' : '1'; }
-      // Dot indicators
-      var dots = document.getElementById('rev-page-dots');
-      if (dots) {
-        dots.innerHTML = '';
-        for (var d = 1; d <= revTotalPages; d++) {
-          var dot = document.createElement('button');
-          dot.setAttribute('aria-label', 'Go to page ' + d);
-          dot.style.cssText = 'width:8px;height:8px;border-radius:50%;border:none;cursor:pointer;padding:0;background:' + (d === revCurrentPage ? 'var(--color-maroon)' : 'var(--color-cream-dark)') + ';transition:background 0.2s;';
-          (function(pg) { dot.onclick = function() { vihaRevShow(pg); }; })(d);
-          dots.appendChild(dot);
-        }
-      }
-    }
-
-    window.vihaRevPage = function(dir) { vihaRevShow(revCurrentPage + dir); };
-
-    // Init — hide pagination if only one page
-    vihaRevShow(1);
-    if (revTotalPages <= 1) {
-      var pg = document.getElementById('reviews-pagination');
-      if (pg) pg.style.display = 'none';
-    }
-
-    // ── Helpful votes ──────────────────────────────────────────────────────
-    var HELPFUL_KEY = 'viha_helpful_{{ current_product.id }}_';
-
-    function vihaUpdateHelpfulMsg(reviewEl, upCount) {
-      var msg = reviewEl.querySelector('.helpful-msg');
-      if (!msg) return;
-      if (upCount > 0) {
-        msg.textContent = upCount + ' ' + (upCount === 1 ? 'customer' : 'customers') + ' found this review helpful';
-        msg.style.display = '';
-      } else {
-        msg.style.display = 'none';
-      }
-    }
-
-    window.vihaHelpful = function(btn, idx, isUp) {
-      var reviewEl = btn.closest('.review-item');
-      var key = HELPFUL_KEY + idx;
-      var current = localStorage.getItem(key);
-      var dir = isUp ? 'up' : 'down';
-      var upBtn  = reviewEl.querySelector('.helpful-up-btn');
-      var downBtn = reviewEl.querySelector('.helpful-down-btn');
-      var upCount = parseInt(reviewEl.querySelector('.helpful-up-count').textContent) || 0;
-      var downCount = parseInt(reviewEl.querySelector('.helpful-down-count').textContent) || 0;
-
-      if (current === dir) {
-        // Un-vote
-        localStorage.removeItem(key);
-        if (isUp) { upCount = Math.max(0, upCount - 1); upBtn.style.color = 'rgba(45,45,45,0.6)'; upBtn.style.borderColor = 'var(--color-cream-dark)'; }
-        else       { downCount = Math.max(0, downCount - 1); downBtn.style.color = 'rgba(45,45,45,0.6)'; downBtn.style.borderColor = 'var(--color-cream-dark)'; }
-      } else {
-        // Remove opposite vote first
-        if (current === 'up')   { upCount   = Math.max(0, upCount - 1);   upBtn.style.color   = 'rgba(45,45,45,0.6)'; upBtn.style.borderColor   = 'var(--color-cream-dark)'; }
-        if (current === 'down') { downCount  = Math.max(0, downCount - 1); downBtn.style.color = 'rgba(45,45,45,0.6)'; downBtn.style.borderColor = 'var(--color-cream-dark)'; }
-        localStorage.setItem(key, dir);
-        if (isUp) { upCount++;   upBtn.style.color   = 'var(--color-maroon)'; upBtn.style.borderColor   = 'var(--color-maroon)'; }
-        else      { downCount++; downBtn.style.color = 'rgba(45,45,45,0.6)'; downBtn.style.borderColor = 'var(--color-cream-dark)'; }
-      }
-      reviewEl.querySelector('.helpful-up-count').textContent   = upCount;
-      reviewEl.querySelector('.helpful-down-count').textContent = downCount;
-      vihaUpdateHelpfulMsg(reviewEl, upCount);
-    };
-
-    // Restore helpful state from localStorage on load
-    document.querySelectorAll('.review-item').forEach(function(reviewEl) {
-      var idx = reviewEl.dataset.reviewIdx;
-      var saved = localStorage.getItem(HELPFUL_KEY + idx);
-      if (saved === 'up')   { reviewEl.querySelector('.helpful-up-btn').style.color   = 'var(--color-maroon)'; reviewEl.querySelector('.helpful-up-btn').style.borderColor   = 'var(--color-maroon)'; }
-      if (saved === 'down') { reviewEl.querySelector('.helpful-down-btn').style.color = 'rgba(45,45,45,0.6)'; }
-    });
-
-    // ── Star picker ────────────────────────────────────────────────────────
-    window.vihaSetStar = function(n) {
-      document.getElementById('review-star-val').value = n;
-      document.querySelectorAll('#star-picker button').forEach(function(btn) {
-        var s = parseInt(btn.dataset.star);
-        btn.style.color = s <= n ? 'var(--color-gold)' : 'rgba(45,45,45,0.2)';
-      });
-    };
-    document.querySelectorAll('#star-picker button').forEach(function(btn) {
-      btn.addEventListener('mouseover', function() {
-        var n = parseInt(btn.dataset.star);
-        document.querySelectorAll('#star-picker button').forEach(function(b) {
-          b.style.color = parseInt(b.dataset.star) <= n ? 'var(--color-gold)' : 'rgba(45,45,45,0.2)';
-        });
-      });
-      btn.addEventListener('mouseout', function() {
-        var selected = parseInt(document.getElementById('review-star-val').value) || 0;
-        document.querySelectorAll('#star-picker button').forEach(function(b) {
-          b.style.color = parseInt(b.dataset.star) <= selected ? 'var(--color-gold)' : 'rgba(45,45,45,0.2)';
-        });
-      });
-    });
-
-    // ── Write a review form ────────────────────────────────────────────────
-    window.vihaSubmitReview = function() {
-      var star = parseInt(document.getElementById('review-star-val').value) || 0;
-      var name = (document.getElementById('rev-name').value || '').trim();
-      var body = (document.getElementById('rev-body').value || '').trim();
-      var err  = document.getElementById('rev-error');
-      err.style.display = 'none';
-      if (star === 0) { err.textContent = 'Please select a star rating.'; err.style.display = ''; return; }
-      if (!name)      { err.textContent = 'Please enter your name.'; err.style.display = ''; return; }
-      if (!body)      { err.textContent = 'Please write your review.'; err.style.display = ''; return; }
-      document.getElementById('review-form-wrap').hidden = true;
-      document.getElementById('review-success').hidden   = false;
-    };
 
   })();
 </script>

@@ -22,7 +22,7 @@
   {%- comment -%} Open Graph / Twitter Card — resolve the best available image once {%- endcomment -%}
   {%- assign social_image = page_image | default: settings.social_share_image -%}
   <meta property="og:site_name" content="{{ shop.name }}">
-  <meta property="og:type" content="{% if template contains 'product' %}og:product{% else %}website{% endif %}">
+  <meta property="og:type" content="{% if template contains 'product' %}product{% else %}website{% endif %}">
   <meta property="og:title" content="{{ page_title | escape }}">
   <meta property="og:url" content="{{ canonical_url }}">
   {%- if page_description -%}

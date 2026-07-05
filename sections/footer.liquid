@@ -92,10 +92,12 @@
           {{ section.settings.contact_address | default: "India" }}
         </p>
       </div>
+      {% if section.settings.trust_badge_heading != blank or section.settings.trust_badge_text != blank %}
       <div style="margin-top:1.25rem;padding:0.75rem 1rem;background:rgba(184,137,61,0.08);border:1px solid rgba(184,137,61,0.2);border-left:2px solid var(--color-gold);border-radius:2px;">
-        <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.18em;color:var(--color-gold);margin-bottom:4px;">100% Pure &amp; Natural</p>
-        <p style="font-size:10.5px;color:rgba(45,45,45,0.7);line-height:1.5;">No parabens · No sulphates · No artificial fragrances · Cruelty-free</p>
+        <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.18em;color:var(--color-gold);margin-bottom:4px;">{{ section.settings.trust_badge_heading | default: "100% Pure & Natural" }}</p>
+        <p style="font-size:10.5px;color:rgba(45,45,45,0.7);line-height:1.5;">{{ section.settings.trust_badge_text | default: "No parabens · No sulphates · No artificial fragrances · Cruelty-free" }}</p>
       </div>
+      {% endif %}
     </div>
 
   </div>
@@ -119,7 +121,9 @@
     { "type": "textarea", "id": "brand_description", "label": "Brand description", "default": "Bringing the wisdom of ancient Ayurvedic traditions to modern rituals — pure, authentic, and crafted with love." },
     { "type": "text",     "id": "contact_email",     "label": "Contact email" },
     { "type": "text",     "id": "contact_phone",     "label": "Contact phone" },
-    { "type": "textarea", "id": "contact_address",   "label": "Address" }
+    { "type": "textarea", "id": "contact_address",   "label": "Address" },
+    { "type": "text",     "id": "trust_badge_heading","label": "Trust badge heading", "default": "100% Pure & Natural" },
+    { "type": "text",     "id": "trust_badge_text",  "label": "Trust badge text",    "default": "No parabens · No sulphates · No artificial fragrances · Cruelty-free" }
   ]
 }
 {% endschema %}

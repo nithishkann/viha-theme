@@ -10,9 +10,9 @@
 
       <a href="/collections/spiritual-pooja" class="curated__card" aria-label="Pooja Products collection">
         {% if section.settings.img_pooja != blank %}
-          <img src="{{ section.settings.img_pooja | img_url: 'master' }}" alt="Pooja Products" class="curated__img" loading="lazy">
+          <img src="{{ section.settings.img_pooja | image_url: width: 800 }}" alt="Pooja Products" class="curated__img" width="800" height="800" loading="lazy">
         {% else %}
-          <img src="{{ 'hero_banner.png' | asset_url }}" alt="Pooja Products" class="curated__img" loading="lazy">
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'curated__img placeholder-svg' }}
         {% endif %}
         <div class="curated__card-body">
           <p class="curated__label">Pooja Products</p>
@@ -26,9 +26,9 @@
 
       <a href="/collections/jewellery-fashion" class="curated__card" aria-label="Sacred Jewelry collection">
         {% if section.settings.img_jewelry != blank %}
-          <img src="{{ section.settings.img_jewelry | img_url: 'master' }}" alt="Sacred Jewelry" class="curated__img" loading="lazy">
+          <img src="{{ section.settings.img_jewelry | image_url: width: 800 }}" alt="Sacred Jewelry" class="curated__img" width="800" height="800" loading="lazy">
         {% else %}
-          <img src="{{ 'sacred_jewelry.png' | asset_url }}" alt="Sacred Jewelry" class="curated__img" loading="lazy">
+          {{ 'lifestyle-2' | placeholder_svg_tag: 'curated__img placeholder-svg' }}
         {% endif %}
         <div class="curated__card-body">
           <p class="curated__label">Sacred Jewelry</p>
@@ -42,9 +42,9 @@
 
       <a href="/collections/jewellery-fashion" class="curated__card" aria-label="Traditional Clothing collection">
         {% if section.settings.img_clothing != blank %}
-          <img src="{{ section.settings.img_clothing | img_url: 'master' }}" alt="Traditional Clothing" class="curated__img" loading="lazy">
+          <img src="{{ section.settings.img_clothing | image_url: width: 800 }}" alt="Traditional Clothing" class="curated__img" width="800" height="800" loading="lazy">
         {% else %}
-          <img src="{{ 'traditional_clothing.png' | asset_url }}" alt="Traditional Clothing" class="curated__img" loading="lazy">
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'curated__img placeholder-svg' }}
         {% endif %}
         <div class="curated__card-body">
           <p class="curated__label">Traditional Clothing</p>

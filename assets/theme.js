@@ -7,6 +7,18 @@
 const $ = (sel, ctx = document) => ctx.querySelector(sel);
 const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
+/* Escape untrusted strings before interpolating into innerHTML template literals.
+   Product titles/URLs/images come from the catalog (some bulk-imported from mixed
+   sources), so treat them as untrusted to prevent stored-XSS via a crafted title. */
+function escapeHtml(str) {
+  return String(str == null ? '' : str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 function trapFocus(el) {
   const focusable = $$('a,button,input,select,textarea,[tabindex]:not([tabindex="-1"])', el).filter(e => !e.disabled);
   if (!focusable.length) return;
@@ -192,23 +204,23 @@ const CartDrawer = (function () {
     if (footer) footer.hidden = false;
 
     body.innerHTML = cart.items.map(item => `
-      <div class="cart-item" data-key="${item.key}">
-        <img class="cart-item__img" src="${item.image}" alt="${item.product_title}" loading="lazy">
+      <div class="cart-item" data-key="${escapeHtml(item.key)}">
+        <img class="cart-item__img" src="${encodeURI(item.image || '')}" alt="${escapeHtml(item.product_title)}" loading="lazy">
         <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;">
           <div>
-            <a href="${item.url}" class="cart-item__name">${item.product_title}</a>
-            ${item.variant_title && item.variant_title !== 'Default Title' ? `<p class="cart-item__cat">${item.variant_title}</p>` : ''}
+            <a href="${encodeURI(item.url || '')}" class="cart-item__name">${escapeHtml(item.product_title)}</a>
+            ${item.variant_title && item.variant_title !== 'Default Title' ? `<p class="cart-item__cat">${escapeHtml(item.variant_title)}</p>` : ''}
           </div>
           <div style="display:flex;align-items:center;justify-content:space-between;">
             <div class="cart-item__qty">
-              <button class="cart-item__qty-btn" aria-label="Decrease quantity" data-qty-minus data-line="${item.key}">−</button>
+              <button class="cart-item__qty-btn" aria-label="Decrease quantity" data-qty-minus data-line="${escapeHtml(item.key)}">−</button>
               <span class="cart-item__qty-num">${item.quantity}</span>
-              <button class="cart-item__qty-btn" aria-label="Increase quantity" data-qty-plus data-line="${item.key}">+</button>
+              <button class="cart-item__qty-btn" aria-label="Increase quantity" data-qty-plus data-line="${escapeHtml(item.key)}">+</button>
             </div>
             <span class="cart-item__price">${formatMoney(item.final_line_price)}</span>
           </div>
         </div>
-        <button class="cart-item__remove" aria-label="Remove item" data-remove="${item.key}">
+        <button class="cart-item__remove" aria-label="Remove item" data-remove="${escapeHtml(item.key)}">
           <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
           </svg>
@@ -373,10 +385,10 @@ const CartDrawer = (function () {
         results.innerHTML = `
           <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-top:1.5rem;">
             ${products.map(p => `
-              <a href="${p.url}" class="search-result-card">
-                ${p.image ? `<img class="search-result-card__img" src="${p.image}" alt="${p.title}" loading="lazy">` : ''}
+              <a href="${encodeURI(p.url || '')}" class="search-result-card">
+                ${p.image ? `<img class="search-result-card__img" src="${encodeURI(p.image)}" alt="${escapeHtml(p.title)}" loading="lazy">` : ''}
                 <div>
-                  <p style="font-family:var(--font-heading);font-size:13px;font-weight:600;color:var(--color-maroon);line-height:1.3;">${p.title}</p>
+                  <p style="font-family:var(--font-heading);font-size:13px;font-weight:600;color:var(--color-maroon);line-height:1.3;">${escapeHtml(p.title)}</p>
                   ${p.price ? `<p style="font-size:12px;font-weight:600;color:var(--color-maroon);margin-top:4px;">${formatMoneyCents(p.price)}</p>` : ''}
                 </div>
               </a>`).join('')}

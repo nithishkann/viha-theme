@@ -89,10 +89,13 @@ function vihaTrackOrder(e) {
 
   // Redirect to Shopify native order status (works for logged-in customers)
   // For guest orders, Shopify uses token-based URL; redirect to account orders as fallback
+  // Build with textContent for the user-supplied orderId so a crafted value
+  // (e.g. "<img src=x onerror=…>") can't inject markup (DOM-XSS).
   inner.innerHTML = '<div style="text-align:center;padding:1rem;">'
     + '<div style="width:40px;height:40px;border:3px solid var(--color-cream-dark);border-top-color:var(--color-maroon);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 1rem;"></div>'
-    + '<p style="font-size:13px;color:rgba(45,45,45,0.6);">Looking up order <strong style="color:var(--color-maroon);">#' + orderId + '</strong>...</p>'
+    + '<p style="font-size:13px;color:rgba(45,45,45,0.6);">Looking up order <strong style="color:var(--color-maroon);"></strong>...</p>'
     + '</div>';
+  inner.querySelector('strong').textContent = '#' + orderId;
   result.style.display = 'block';
 
   setTimeout(function() {
