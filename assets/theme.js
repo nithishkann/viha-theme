@@ -290,6 +290,11 @@ const CartDrawer = (function () {
     const variantId = btn.getAttribute('data-variant-id') || btn.getAttribute('data-add-to-cart');
     if (!variantId) return;
 
+    // Intercept the native form submit so ATC opens the drawer instead of
+    // full-page navigating to /cart (PDP button is a form submit button).
+    e.preventDefault();
+
+    const quantity = Math.max(1, parseInt(btn.getAttribute('data-quantity'), 10) || 1);
     const label = btn.querySelector('[data-atc-label]');
     const originalLabelText = label ? label.textContent : null;
     const originalAriaLabel = btn.getAttribute('aria-label');
@@ -302,7 +307,7 @@ const CartDrawer = (function () {
     fetch('/cart/add.js', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: variantId, quantity: 1 })
+      body: JSON.stringify({ id: variantId, quantity: quantity })
     })
     .then(r => r.json())
     .then(() => {
@@ -421,18 +426,9 @@ const CartDrawer = (function () {
     });
   });
 
-  /* Variant selector */
-  const variantSelect = $('[data-variant-select]');
-  const atcBtn        = $('[data-add-to-cart]');
-  if (variantSelect && atcBtn) {
-    variantSelect.addEventListener('change', () => {
-      const opt = variantSelect.options[variantSelect.selectedIndex];
-      atcBtn.setAttribute('data-variant-id', opt.value);
-      const available = opt.getAttribute('data-available') !== 'false';
-      atcBtn.disabled = !available;
-      atcBtn.textContent = available ? 'Add to Cart' : 'Sold Out';
-    });
-  }
+  /* Variant selection, quantity stepper and sticky ATC live in the product
+     section's own inline script (product-template.liquid), where the variant
+     data and price hooks are rendered. */
 
 })();
 
