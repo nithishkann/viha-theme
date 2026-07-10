@@ -34,9 +34,18 @@
     <meta property="og:description" content="{{ page_description | escape }}">
   {%- endif -%}
   {%- if social_image != blank -%}
-    <meta property="og:image" content="https:{{ social_image | img_url: '1200x630' }}">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+    {%- comment -%} Modern image_url, NOT deprecated img_url — img_url can't transform
+      AVIF/Files-hosted images and silently falls back to its 100px 'small' default
+      (found live 2026-07-11: og:image emitted the _small logo). No crop: preserves
+      logos/product shots whole; emit the real scaled dimensions instead. {%- endcomment -%}
+    {%- assign og_img_w = 1200 -%}
+    {%- if social_image.width < 1200 -%}{%- assign og_img_w = social_image.width -%}{%- endif -%}
+    {%- assign og_img_h = og_img_w | divided_by: social_image.aspect_ratio | round -%}
+    {%- capture og_img_url %}{{ social_image | image_url: width: og_img_w }}{% endcapture -%}
+    {%- unless og_img_url contains '//' -%}{%- assign og_img_url = shop.secure_url | append: og_img_url -%}{%- endunless -%}
+    <meta property="og:image" content="{{ og_img_url }}">
+    <meta property="og:image:width" content="{{ og_img_w }}">
+    <meta property="og:image:height" content="{{ og_img_h }}">
     <meta name="twitter:card" content="summary_large_image">
   {%- else -%}
     <meta name="twitter:card" content="summary">
