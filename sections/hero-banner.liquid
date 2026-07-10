@@ -1,7 +1,7 @@
 <div class="hero">
   {% if section.settings.bg_image != blank %}
     {%- assign hero_bg = section.settings.bg_image | image_url: width: 1800 -%}
-    <link rel="preload" as="image" href="{{ hero_bg }}">
+    <link rel="preload" as="image" href="{{ hero_bg }}" fetchpriority="high">
     <div class="hero__bg" aria-hidden="true" style="background-image:url({{ hero_bg }});"></div>
   {% endif %}
   <div class="hero__overlay" aria-hidden="true"></div>

@@ -176,13 +176,13 @@ ul { list-style: none; }
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: var(--color-gold);
+  color: #8A6420; /* darker gold: brand gold #B8893D fails 4.5:1 contrast on cream at this size */
   font-weight: 700;
 }
 .header__tagline-sub {
   font-size: 10.5px;
   font-style: italic;
-  color: rgba(45,45,45,0.55);
+  color: rgba(45,45,45,0.75); /* was 0.55 — failed contrast on cream */
 }
 
 .header__icons {
@@ -273,7 +273,7 @@ ul { list-style: none; }
 }
 .header__nav-btn:hover,
 .header__nav-btn.is-active { color: var(--color-maroon); background: rgba(241,237,230,0.5); }
-.header__nav-btn--all { color: var(--color-gold); font-weight: 900; border-bottom: 1px solid rgba(184,137,61,0.4); }
+.header__nav-btn--all { color: #8A6420; font-weight: 900; border-bottom: 1px solid rgba(184,137,61,0.4); } /* darker gold for 4.5:1 contrast */
 
 /* Mega menu — lives inside Row 2 stacking context */
 .mega-menu {

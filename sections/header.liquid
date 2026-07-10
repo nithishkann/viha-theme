@@ -59,9 +59,12 @@
     <div class="header__icons">
 
       {%- comment -%} Country / currency — read-only display; change it from Account → Region & Currency {%- endcomment -%}
-      <span class="country-badge" aria-label="Shopping from {{ localization.country.name }}, currency {{ localization.country.currency.iso_code }}">
+      {%- comment -%} aria-label is prohibited on a plain span (Lighthouse aria-prohibited-attr);
+          use visually-hidden text instead. {%- endcomment -%}
+      <span class="country-badge">
+        <span class="sr-only">Shopping from {{ localization.country.name }}, currency {{ localization.country.currency.iso_code }}</span>
         <span aria-hidden="true">{% render 'flag-emoji', code: localization.country.iso_code %}</span>
-        <span class="hidden md:inline">{{ localization.country.currency.iso_code }}</span>
+        <span class="hidden md:inline" aria-hidden="true">{{ localization.country.currency.iso_code }}</span>
       </span>
 
       {%- comment -%} Search {%- endcomment -%}

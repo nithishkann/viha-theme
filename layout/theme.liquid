@@ -17,8 +17,13 @@
   <link rel="canonical" href="{{ canonical_url }}">
 
   {%- comment -%} Favicon {%- endcomment -%}
+  {%- comment -%} Fall back to the logo when no favicon is uploaded — otherwise browsers
+      request /favicon.ico and 404 (console error on every page). image_url, not the
+      deprecated img_url, so AVIF/Files-hosted images transform correctly. {%- endcomment -%}
   {% if settings.favicon != blank %}
-    <link rel="icon" type="image/png" href="{{ settings.favicon | img_url: '32x32' }}">
+    <link rel="icon" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+  {% elsif settings.logo != blank %}
+    <link rel="icon" href="{{ settings.logo | image_url: width: 32, height: 32 }}">
   {% endif %}
 
   {%- comment -%} Open Graph / Twitter Card — resolve the best available image once.
@@ -42,7 +47,13 @@
     {%- if social_image.width < 1200 -%}{%- assign og_img_w = social_image.width -%}{%- endif -%}
     {%- assign og_img_h = og_img_w | divided_by: social_image.aspect_ratio | round -%}
     {%- capture og_img_url %}{{ social_image | image_url: width: og_img_w }}{% endcapture -%}
-    {%- unless og_img_url contains '//' -%}{%- assign og_img_url = shop.secure_url | append: og_img_url -%}{%- endunless -%}
+    {%- comment -%} image_url returns protocol-relative (//host/…) on production and
+      path-relative (/cdn/…) via theme-dev proxy; OG spec wants a full scheme. {%- endcomment -%}
+    {%- if og_img_url contains '//' -%}
+      {%- unless og_img_url contains 'https://' -%}{%- assign og_img_url = og_img_url | prepend: 'https:' -%}{%- endunless -%}
+    {%- else -%}
+      {%- assign og_img_url = shop.secure_url | append: og_img_url -%}
+    {%- endif -%}
     <meta property="og:image" content="{{ og_img_url }}">
     <meta property="og:image:width" content="{{ og_img_w }}">
     <meta property="og:image:height" content="{{ og_img_h }}">
