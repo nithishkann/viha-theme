@@ -36,12 +36,13 @@
         </div>
       </div>
 
-      {%- comment -%} Skip GST tax-rate collections — detect by "gst" in handle/title, not a fixed list (see product-template.liquid for why) {%- endcomment -%}
+      {%- comment -%} Skip GST tax-rate collections — three signals: "gst" in handle/title, "%" in title ("18%"), or purely numeric handle ("18"). See product-template.liquid for why. {%- endcomment -%}
       {%- assign related_collection = blank -%}
       {%- for c in product.collections -%}
         {%- if related_collection == blank -%}
           {%- assign c_title_lower_rp = c.title | downcase -%}
-          {%- unless c.handle contains 'gst' or c_title_lower_rp contains 'gst' -%}
+          {%- capture c_handle_num_rp %}{{ c.handle | plus: 0 }}{% endcapture -%}
+          {%- unless c.handle contains 'gst' or c_title_lower_rp contains 'gst' or c.title contains '%' or c_handle_num_rp == c.handle -%}
             {%- assign related_collection = c -%}
           {%- endunless -%}
         {%- endif -%}

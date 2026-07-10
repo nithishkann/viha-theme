@@ -4,16 +4,20 @@
   Every product also belongs to a GST tax-rate collection (Admin → Settings → Taxes →
   India → Product overrides), used for Shopify's collection-based tax overrides — not a
   real merchandising category. These get renamed/added to over time (confirmed 2026-07-02:
-  "0% GST", "five gst", "twelve gst", "eighteen gst", "3% GST", "point gst"), so detect them
-  by "gst" appearing in the handle/title rather than a fixed handle list, which breaks the
-  moment one gets renamed. Skip them when picking "the" category collection for display
-  (breadcrumb, related products).
+  "0% GST", "five gst", "twelve gst", "eighteen gst", "3% GST", "point gst"; found 2026-07-11:
+  legacy ones titled just "18%" with purely numeric handles like "18"), so detect them by
+  THREE signals, not a fixed handle list, which breaks the moment one gets renamed:
+    1. "gst" in the handle or downcased title
+    2. "%" anywhere in the title (tax-rate labels like "18%", "3% GST")
+    3. a purely numeric handle ("18", "12", "5" — `plus: 0` round-trips only for integers)
+  Skip them when picking "the" category collection for display (breadcrumb, related products).
 {%- endcomment -%}
 {%- assign primary_collection = blank -%}
 {%- for c in current_product.collections -%}
   {%- assign c_title_lower = c.title | downcase -%}
+  {%- capture c_handle_num %}{{ c.handle | plus: 0 }}{% endcapture -%}
   {%- assign is_gst_collection = false -%}
-  {%- if c.handle contains 'gst' or c_title_lower contains 'gst' -%}
+  {%- if c.handle contains 'gst' or c_title_lower contains 'gst' or c.title contains '%' or c_handle_num == c.handle -%}
     {%- assign is_gst_collection = true -%}
   {%- endif -%}
   {%- if primary_collection == blank and is_gst_collection == false -%}
