@@ -1,8 +1,18 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero-banner": {
       "type": "hero-banner",
       "settings": {
+        "bg_image": "shopify://shop_images/hero_banner_9cc876db-3f3d-4057-b5c2-8e0a2e8d0eb5.jpg",
         "eyebrow": "Spiritual Essentials Curated by Mrs Anitha Kuppusamy",
         "heading": "Ancient Traditions, Delivered Worldwide",
         "subtext": "Viha Heritage brings you sacred pooja essentials, Ayurvedic wellness products, handcrafted jewellery, and organic foods rooted in 5000 years of Indian tradition.",
@@ -14,10 +24,6 @@
     },
     "trust-bar": {
       "type": "trust-bar",
-      "settings": {
-        "customer_count": "1,00,000+",
-        "headline": "Happy Customers Across 6 Countries"
-      },
       "blocks": {
         "trust-1": {
           "type": "trust_item",
@@ -49,48 +55,56 @@
         "trust-2",
         "trust-3",
         "trust-4"
-      ]
+      ],
+      "settings": {
+        "customer_count": "1,00,000+",
+        "headline": "Happy Customers Across 6 Countries"
+      }
     },
     "shop-by-purpose": {
       "type": "shop-by-purpose",
-      "settings": {
-        "eyebrow": "EXPLORE BY INTENTION",
-        "heading": "Shop by Purpose",
-        "view_all_label": "View all"
-      },
       "blocks": {
         "sbp-large": {
           "type": "large",
           "settings": {
+            "image": "shopify://shop_images/daily_pooja_efa52599-4dc1-4564-807a-a2b5368cd03a.jpg",
             "badge": "Daily Rituals",
             "title": "Daily Pooja",
             "subtext": "Elevate your daily rituals with pure ingredients, authentic oil lamps, and hand-milled powders.",
-            "collection": "spiritual-pooja"
+            "collection": "spiritual-pooja",
+            "custom_link": ""
           }
         },
         "sbp-small-1": {
           "type": "small",
           "settings": {
+            "image": "shopify://shop_images/festival_essentials.jpg",
+            "eyebrow": "",
             "title": "Festival Essentials",
-            "collection": "spiritual-pooja"
+            "collection": "spiritual-pooja",
+            "custom_link": ""
           }
         },
         "sbp-small-2": {
           "type": "small",
           "settings": {
+            "image": "shopify://shop_images/ayurveda_wellness_42b149c1-fb26-4541-bcbd-2b8947f0b922.jpg",
             "eyebrow": "Beauty",
             "title": "Ayurvedic Beauty",
-            "collection": "ayurveda-herbal"
+            "collection": "ayurveda-herbal",
+            "custom_link": ""
           }
         },
         "sbp-split": {
           "type": "split",
           "settings": {
+            "image": "shopify://shop_images/housewarming_gifts.jpg",
             "eyebrow": "New Beginnings",
             "title": "Housewarming Gifts",
             "subtext": "Thoughtful traditional gifts, hand-cast brass Ganeshas for new chapters.",
             "cta_label": "Explore",
-            "collection": "home-living"
+            "collection": "home-living",
+            "custom_link": ""
           }
         }
       },
@@ -99,7 +113,13 @@
         "sbp-small-1",
         "sbp-small-2",
         "sbp-split"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "EXPLORE BY INTENTION",
+        "heading": "Shop by Purpose",
+        "view_all_label": "View all",
+        "view_all_url": ""
+      }
     },
     "beauty-promo": {
       "type": "beauty-promo",
@@ -107,6 +127,8 @@
         "eyebrow": "BEAUTY & WELLNESS",
         "heading": "Beauty & Wellness, Rooted in Ayurveda",
         "body": "Viha's beauty collection draws on five thousand years of Ayurvedic wisdom — handmade soaps, therapeutic oils, natural attars, and botanical skincare carefully curated by Mrs Anitha Kuppusamy.",
+        "image": "shopify://shop_images/Gemini_Generated_Image_vnjykbvnjykbvnjy.png",
+        "image_alt": "Ayurvedic Beauty",
         "cta_text": "Explore Beauty",
         "cta_url": "/pages/beauty"
       }
@@ -192,17 +214,15 @@
     },
     "curated-collections": {
       "type": "curated-collections",
-      "settings": {
-        "eyebrow": "HAND-PICKED FOR YOU",
-        "heading": "Curated Collections"
-      },
       "blocks": {
         "card-pooja": {
           "type": "card",
           "settings": {
             "label": "Pooja Products",
             "description": "Sacred essentials for daily & festival rituals, from Vellerukku to Rudraksha malas.",
-            "collection": "spiritual-pooja"
+            "collection": "spiritual-pooja",
+            "custom_link": "",
+            "image": "shopify://shop_images/daily_pooja_efa52599-4dc1-4564-807a-a2b5368cd03a.jpg"
           }
         },
         "card-jewelry": {
@@ -210,7 +230,9 @@
           "settings": {
             "label": "Sacred Jewelry",
             "description": "Temple jewellery, silver anklets, and Aimpon pieces steeped in heritage craft.",
-            "collection": "jewelleries"
+            "collection": "jewelleries",
+            "custom_link": "",
+            "image": "shopify://shop_images/sacred_jewelry.jpg"
           }
         },
         "card-clothing": {
@@ -218,7 +240,9 @@
           "settings": {
             "label": "Traditional Clothing",
             "description": "Salem silk sarees, silk veshtis, and festive attire for every sacred occasion.",
-            "collection": "sarees"
+            "collection": "sarees",
+            "custom_link": "",
+            "image": "shopify://shop_images/traditional_clothing.jpg"
           }
         }
       },
@@ -226,13 +250,18 @@
         "card-pooja",
         "card-jewelry",
         "card-clothing"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "HAND-PICKED FOR YOU",
+        "heading": "Curated Collections"
+      }
     },
     "latest-journal": {
       "type": "latest-journal",
       "settings": {
         "eyebrow": "FROM OUR JOURNAL",
         "heading": "Stories, Rituals & Wisdom",
+        "blog": "",
         "posts_to_show": 3
       }
     },
@@ -250,10 +279,61 @@
         "heading": "Preserving Tradition, Promoting Wellness.",
         "body": "Viha Heritage Store was born from a deep reverence for Indian spiritual traditions and holistic wellness. Every product we offer — from sacred brass idols to handcrafted Ayurvedic soaps — is personally selected and curated to bring authentic, time-honored essentials into your home.",
         "body2": "Rooted in Tamil Nadu's rich cultural heritage, Viha is more than a store. It is a living bridge between the wisdom of our ancestors and the needs of contemporary devotees worldwide.",
+        "image": "shopify://shop_images/Gemini_Generated_Image_y15njny15njny15n_1.png",
         "founder_name": "Anitha Kuppusamy",
         "founder_title": "FOUNDER · VIHA HERITAGE STORE",
         "cta_text": "Read Our Story",
         "cta_url": "/pages/our-story"
+      }
+    },
+    "store-banner": {
+      "type": "store-banner",
+      "settings": {
+        "image": "shopify://shop_images/unnamed.jpg",
+        "eyebrow": "Visit Us in Chennai",
+        "heading": "Our Store",
+        "address": "<p>VIHA, No 10, Bhagirathy Street, Raja Annamalaipuram, Chennai 600028</p><p>(Near Kamakshi Amman Temple)</p>",
+        "map_url": "",
+        "button_label": "Get Directions"
+      }
+    },
+    "shipping-worldwide": {
+      "type": "shipping-worldwide",
+      "blocks": {
+        "ship-intl": {
+          "type": "line",
+          "settings": {
+            "icon": "globe",
+            "text": "<p>International shipping at low costs — duties and rates calculated at checkout. International payments are processed securely through Razorpay.</p>",
+            "highlight": false
+          }
+        },
+        "ship-note": {
+          "type": "line",
+          "settings": {
+            "icon": "alert",
+            "text": "<p><strong>NOTE:</strong> Kindly avoid ordering Pachai Karpooram (edible camphor) &amp; Sangu (conch shell) for international shipments, and Shea Butter for UAE shipments — these are restricted by customs.</p>",
+            "highlight": true
+          }
+        },
+        "ship-days": {
+          "type": "line",
+          "settings": {
+            "icon": "clock",
+            "text": "<p>Minimum 14 working days required for international delivery. Day of booking, Sundays, public holidays and Tamil Nadu festival days are not working days.</p>",
+            "highlight": false
+          }
+        }
+      },
+      "block_order": [
+        "ship-intl",
+        "ship-note",
+        "ship-days"
+      ],
+      "settings": {
+        "eyebrow": "From Chennai to Your Doorstep",
+        "heading": "Shipping Worldwide",
+        "intro": "We deliver Viha products across India and around the world."
       }
     },
     "order-tracker": {
@@ -263,45 +343,6 @@
         "heading": "Track Your Spiritual Journey",
         "subtext": "Enter your Viha order ID to get real-time updates on your sacred items."
       }
-    },
-    "store-banner": {
-      "type": "store-banner",
-      "settings": {}
-    },
-    "shipping-worldwide": {
-      "type": "shipping-worldwide",
-      "blocks": {
-        "ship-intl": {
-          "type": "line",
-          "settings": {
-            "icon": "globe",
-            "highlight": false,
-            "text": "<p>International shipping at low costs — duties and rates calculated at checkout. International payments are processed securely through Razorpay.</p>"
-          }
-        },
-        "ship-note": {
-          "type": "line",
-          "settings": {
-            "icon": "alert",
-            "highlight": true,
-            "text": "<p><strong>NOTE:</strong> Kindly avoid ordering Pachai Karpooram (edible camphor) &amp; Sangu (conch shell) for international shipments, and Shea Butter for UAE shipments — these are restricted by customs.</p>"
-          }
-        },
-        "ship-days": {
-          "type": "line",
-          "settings": {
-            "icon": "clock",
-            "highlight": false,
-            "text": "<p>Minimum 14 working days required for international delivery. Day of booking, Sundays, public holidays and Tamil Nadu festival days are not working days.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "ship-intl",
-        "ship-note",
-        "ship-days"
-      ],
-      "settings": {}
     }
   },
   "order": [

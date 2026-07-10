@@ -17,8 +17,13 @@
     "color_charcoal": "#2D2D2D",
     "font_heading": "libre_caslon_text_n7",
     "font_body": "inter_n4",
+    "logo": "shopify://shop_images/VIHA_FINAL_LOGO_2-C3fASUJH.avif",
     "logo_height": 70,
     "logo_height_mobile": 55,
+    "business_phone": "+91 89398 99409",
+    "social_instagram_link": "https://www.instagram.com/viha.online",
+    "social_facebook_link": "https://www.facebook.com/vihachennai",
+    "social_youtube_link": "https://www.youtube.com/@anithapushpavanamkuppusamyviha",
     "cart_type": "drawer",
     "sections": {
       "announcement-bar": {
@@ -40,8 +45,20 @@
           "contact_email": "",
           "contact_phone": "+91 89398 99409",
           "contact_address": "",
+          "map_url": "",
+          "map_button_label": "Get Directions",
           "trust_badge_heading": "100% Pure & Natural",
           "trust_badge_text": "No parabens · No sulphates · No artificial fragrances · Cruelty-free"
+        }
+      },
+      "delivery-notice": {
+        "type": "delivery-notice",
+        "settings": {
+          "enabled": true,
+          "eyebrow": "A note from Viha",
+          "heading": "Delivery Time: 8–10 Working Days",
+          "body": "<p>You can track your parcels on the India Post website with your tracking number.</p><p>Kindly allow us to deliver our products to you in their best form — we require at least 7–8 working days for delivery.</p><p><strong>NOTE:</strong> Day of booking, Sundays, public holidays and Tamil Nadu festival days are NOT considered working days. Minimum 14 working days required for delivery.</p>",
+          "button_label": "Got it, continue shopping"
         }
       }
     },
@@ -59,10 +76,6 @@
           "widget_type": "review-widget"
         }
       }
-    },
-    "business_phone": "+91 89398 99409",
-    "social_instagram_link": "https://www.instagram.com/viha.online",
-    "social_facebook_link": "https://www.facebook.com/vihachennai",
-    "social_youtube_link": "https://www.youtube.com/@anithapushpavanamkuppusamyviha"
+    }
   }
 }
