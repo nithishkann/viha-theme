@@ -38,7 +38,7 @@
         "settings": {
           "brand_description": "Bringing the wisdom of ancient Ayurvedic traditions to modern rituals — pure, authentic, and crafted with love.",
           "contact_email": "",
-          "contact_phone": "",
+          "contact_phone": "+91 89398 99409",
           "contact_address": "",
           "trust_badge_heading": "100% Pure & Natural",
           "trust_badge_text": "No parabens · No sulphates · No artificial fragrances · Cruelty-free"
@@ -59,6 +59,10 @@
           "widget_type": "review-widget"
         }
       }
-    }
+    },
+    "business_phone": "+91 89398 99409",
+    "social_instagram_link": "https://www.instagram.com/viha.online",
+    "social_facebook_link": "https://www.facebook.com/vihachennai",
+    "social_youtube_link": "https://www.youtube.com/@anithapushpavanamkuppusamyviha"
   }
 }

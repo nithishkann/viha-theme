@@ -3,11 +3,36 @@
     "main": {
       "type": "contact-page",
       "blocks": {
-        "item-1": { "type": "contact_item", "settings": { "icon": "email", "label": "Email", "value": "info@viha.online" } },
-        "item-2": { "type": "contact_item", "settings": { "icon": "whatsapp", "label": "WhatsApp", "value": "+91 98765 43210" } },
-        "item-3": { "type": "contact_item", "settings": { "icon": "clock", "label": "Hours", "value": "Mon – Sat: 10:00 AM – 6:00 PM IST" } }
+        "item-1": {
+          "type": "contact_item",
+          "settings": {
+            "icon": "email",
+            "label": "Email",
+            "value": "info@viha.online"
+          }
+        },
+        "item-2": {
+          "type": "contact_item",
+          "settings": {
+            "icon": "phone",
+            "label": "Customer Care",
+            "value": "+91 89398 99409"
+          }
+        },
+        "item-3": {
+          "type": "contact_item",
+          "settings": {
+            "icon": "clock",
+            "label": "Hours",
+            "value": "Mon – Sat: 10:00 AM – 6:00 PM IST"
+          }
+        }
       },
-      "block_order": ["item-1", "item-2", "item-3"],
+      "block_order": [
+        "item-1",
+        "item-2",
+        "item-3"
+      ],
       "settings": {
         "eyebrow": "Reach Out",
         "heading": "Contact Us",
@@ -20,5 +45,7 @@
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }

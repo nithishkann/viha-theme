@@ -19,12 +19,37 @@
         "headline": "Happy Customers Across 6 Countries"
       },
       "blocks": {
-        "trust-1": { "type": "trust_item", "settings": { "text": "Pan-India & Worldwide Shipping" } },
-        "trust-2": { "type": "trust_item", "settings": { "text": "100% Authentic Products" } },
-        "trust-3": { "type": "trust_item", "settings": { "text": "Ancient Craftsmanship" } },
-        "trust-4": { "type": "trust_item", "settings": { "text": "Ships to 6 Countries" } }
+        "trust-1": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Pan-India & Worldwide Shipping"
+          }
+        },
+        "trust-2": {
+          "type": "trust_item",
+          "settings": {
+            "text": "100% Authentic Products"
+          }
+        },
+        "trust-3": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Ancient Craftsmanship"
+          }
+        },
+        "trust-4": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Ships to 6 Countries"
+          }
+        }
       },
-      "block_order": ["trust-1", "trust-2", "trust-3", "trust-4"]
+      "block_order": [
+        "trust-1",
+        "trust-2",
+        "trust-3",
+        "trust-4"
+      ]
     },
     "shop-by-purpose": {
       "type": "shop-by-purpose",
@@ -69,7 +94,12 @@
           }
         }
       },
-      "block_order": ["sbp-large", "sbp-small-1", "sbp-small-2", "sbp-split"]
+      "block_order": [
+        "sbp-large",
+        "sbp-small-1",
+        "sbp-small-2",
+        "sbp-split"
+      ]
     },
     "beauty-promo": {
       "type": "beauty-promo",
@@ -84,16 +114,73 @@
     "bestsellers": {
       "type": "featured-collection",
       "blocks": {
-        "pill-1": { "type": "category_pill", "settings": { "label": "Spiritual & Pooja", "collection": "top-sellers-spiritual-pooja" } },
-        "pill-2": { "type": "category_pill", "settings": { "label": "Fashion & Grooming", "collection": "top-sellers-fashion-grooming" } },
-        "pill-3": { "type": "category_pill", "settings": { "label": "Ayurveda & Herbal", "collection": "top-sellers-ayurveda-herbal" } },
-        "pill-4": { "type": "category_pill", "settings": { "label": "Food & Organic", "collection": "top-sellers-food-organic" } },
-        "pill-5": { "type": "category_pill", "settings": { "label": "Jewellery & Fashion", "collection": "top-sellers-jewellery-fashion" } },
-        "pill-6": { "type": "category_pill", "settings": { "label": "Kids & Baby", "collection": "top-sellers-kids-baby" } },
-        "pill-7": { "type": "category_pill", "settings": { "label": "Home & Living", "collection": "top-sellers-home-living" } },
-        "pill-8": { "type": "category_pill", "settings": { "label": "Bags & Pouches", "collection": "top-sellers-bags-pouches" } }
+        "pill-1": {
+          "type": "category_pill",
+          "settings": {
+            "label": "Spiritual & Pooja",
+            "collection": "top-sellers-spiritual-pooja"
+          }
+        },
+        "pill-2": {
+          "type": "category_pill",
+          "settings": {
+            "label": "Fashion & Grooming",
+            "collection": "top-sellers-fashion-grooming"
+          }
+        },
+        "pill-3": {
+          "type": "category_pill",
+          "settings": {
+            "label": "Ayurveda & Herbal",
+            "collection": "top-sellers-ayurveda-herbal"
+          }
+        },
+        "pill-4": {
+          "type": "category_pill",
+          "settings": {
+            "label": "Food & Organic",
+            "collection": "top-sellers-food-organic"
+          }
+        },
+        "pill-5": {
+          "type": "category_pill",
+          "settings": {
+            "label": "Jewellery & Fashion",
+            "collection": "top-sellers-jewellery-fashion"
+          }
+        },
+        "pill-6": {
+          "type": "category_pill",
+          "settings": {
+            "label": "Kids & Baby",
+            "collection": "top-sellers-kids-baby"
+          }
+        },
+        "pill-7": {
+          "type": "category_pill",
+          "settings": {
+            "label": "Home & Living",
+            "collection": "top-sellers-home-living"
+          }
+        },
+        "pill-8": {
+          "type": "category_pill",
+          "settings": {
+            "label": "Bags & Pouches",
+            "collection": "top-sellers-bags-pouches"
+          }
+        }
       },
-      "block_order": ["pill-1", "pill-2", "pill-3", "pill-4", "pill-5", "pill-6", "pill-7", "pill-8"],
+      "block_order": [
+        "pill-1",
+        "pill-2",
+        "pill-3",
+        "pill-4",
+        "pill-5",
+        "pill-6",
+        "pill-7",
+        "pill-8"
+      ],
       "settings": {
         "eyebrow": "MOST LOVED",
         "heading": "Bestsellers",
@@ -135,7 +222,11 @@
           }
         }
       },
-      "block_order": ["card-pooja", "card-jewelry", "card-clothing"]
+      "block_order": [
+        "card-pooja",
+        "card-jewelry",
+        "card-clothing"
+      ]
     },
     "latest-journal": {
       "type": "latest-journal",
@@ -172,6 +263,45 @@
         "heading": "Track Your Spiritual Journey",
         "subtext": "Enter your Viha order ID to get real-time updates on your sacred items."
       }
+    },
+    "store-banner": {
+      "type": "store-banner",
+      "settings": {}
+    },
+    "shipping-worldwide": {
+      "type": "shipping-worldwide",
+      "blocks": {
+        "ship-intl": {
+          "type": "line",
+          "settings": {
+            "icon": "globe",
+            "highlight": false,
+            "text": "<p>International shipping at low costs — duties and rates calculated at checkout. International payments are processed securely through Razorpay.</p>"
+          }
+        },
+        "ship-note": {
+          "type": "line",
+          "settings": {
+            "icon": "alert",
+            "highlight": true,
+            "text": "<p><strong>NOTE:</strong> Kindly avoid ordering Pachai Karpooram (edible camphor) &amp; Sangu (conch shell) for international shipments, and Shea Butter for UAE shipments — these are restricted by customs.</p>"
+          }
+        },
+        "ship-days": {
+          "type": "line",
+          "settings": {
+            "icon": "clock",
+            "highlight": false,
+            "text": "<p>Minimum 14 working days required for international delivery. Day of booking, Sundays, public holidays and Tamil Nadu festival days are not working days.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "ship-intl",
+        "ship-note",
+        "ship-days"
+      ],
+      "settings": {}
     }
   },
   "order": [
@@ -184,6 +314,8 @@
     "latest-journal",
     "newsletter",
     "founder",
+    "store-banner",
+    "shipping-worldwide",
     "order-tracker"
   ]
 }
